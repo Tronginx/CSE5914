@@ -1,0 +1,27 @@
+#server:
+#  port: 80
+#
+#spring:
+#  mvc:
+#    dispatch-options-request: true
+#    view:
+#      prefix: /
+#      suffix: .html
+#  thymeleaf:
+#    cache: false
+#    mode: HTML
+#    encoding: UTF-8
+#    prefix:
+#      classpath: classpath:/templates/
+#
+#multipart:
+#  max-file-size: 50MB
+#  max-request-size: 50MB
+#
+#prop:
+#  upload-folder: static/images/
+#
+#file:
+#  upload:
+#    path: D://images/
+#    path.relative: /images/**
