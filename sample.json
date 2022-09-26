@@ -1,0 +1,35 @@
+{
+  "data": [
+    {
+      "type": "object-prediction",
+      "coordination":{
+        "vertice1":{
+          "x":23,
+          "y":23
+        },
+        "vertice2":{
+          "x":23,
+          "y":23
+        },
+        "vertice3":{
+          "x":23,
+          "y":23
+        },
+        "vertice4":{
+          "x":23,
+          "y":23
+        },
+        "predict-name":"xxx"
+      }
+    },
+    {
+      "type":"location",
+      "latitude": "12.94",
+      "altitude": "12.34"
+    }
+  ],
+  "flag":{
+    "error": true,
+    "msg":""
+  }
+}
