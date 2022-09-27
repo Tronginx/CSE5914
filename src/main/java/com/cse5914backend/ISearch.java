@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface ISearch {
 
-    String path = null;
     //send image, return true if able to open
     boolean sendImage(String path);
     //return things disover on image
