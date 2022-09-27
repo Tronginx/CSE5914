@@ -9,7 +9,7 @@ public class Thing {
     String name;
     //rectangle coordination
     // x, y
-//    List<String> location;
+    List<String> locations; //list.get(0) is longitude, (1)is latitude
     int x1, y1;
     int x2, y2;
     int x3, y3;
