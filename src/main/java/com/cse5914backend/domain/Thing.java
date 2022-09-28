@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * DON'T MODIFY THIS BEFORE SPEAK TO Daniel
+ */
 @Data
 public class Thing {
     String name;

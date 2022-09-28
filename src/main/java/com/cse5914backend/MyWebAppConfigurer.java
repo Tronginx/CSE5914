@@ -10,6 +10,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
+/**
+ * DON'T MODIFY THIS BEFORE SPEAK TO Daniel
+ */
 /**
  * 资源映射路径
  */

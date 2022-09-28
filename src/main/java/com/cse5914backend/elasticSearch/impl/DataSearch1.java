@@ -5,7 +5,10 @@ import java.util.List;
 import com.cse5914backend.domain.Record;
 import com.cse5914backend.elasticSearch.IDataSearch;
 
-//demo version
+/**
+ * This is used to test front-end
+ *      without the need to know elastic search
+ */
 public class DataSearch1 implements IDataSearch {
 
     @Override

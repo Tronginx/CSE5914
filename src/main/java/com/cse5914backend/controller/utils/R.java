@@ -2,6 +2,9 @@ package com.cse5914backend.controller.utils;
 
 import lombok.Data;
 
+/**
+ * DON'T MODIFY THIS BEFORE SPEAK TO Daniel
+ */
 @Data
 public class R {
     private Boolean flag;

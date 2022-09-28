@@ -6,6 +6,9 @@ import com.cse5914backend.imageSearch.ISearch;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is used to separately test front end from external service
+ */
 public class Search2 implements ISearch {
     @Override
     public boolean sendImage(String path) {

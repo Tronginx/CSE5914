@@ -33,7 +33,9 @@
                 async: false,
                 contentType: false,
                 processData: false,
-                success: function (result) {
+                success: function (result) {// result 是传回来的json
+                    //TODO: NOTE :result.data是一个 Thing list， 用array接收
+                    //data[i].name是地名，data[i].locations是array， locations(0) is longitude, (1)is latitude
                     console.log(result);
                     alert("上传成功！");
                     $("#div_show_img").html("<img id='input_img' src='" + result + "'>");
