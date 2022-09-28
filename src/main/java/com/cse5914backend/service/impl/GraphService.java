@@ -6,6 +6,7 @@ import com.cse5914backend.imageSearch.ISearch;
 import com.cse5914backend.domain.*;
 import com.cse5914backend.domain.Record;
 import com.cse5914backend.imageSearch.impl.Search1;
+import com.cse5914backend.imageSearch.impl.Search2;
 import com.cse5914backend.service.IGraphService;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Service
 public class GraphService implements IGraphService {
-    ISearch iSearch=new Search1();
+    ISearch iSearch=new Search2();
     @Override
     public List<Thing> getResults(String filePath) {
         boolean readFile = iSearch.sendImage(filePath);

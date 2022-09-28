@@ -89,7 +89,7 @@ public class TestController {
     }
 
     //TODO: return search history
-    @GetMapping("/getHisotry")
+    @GetMapping("/getHistory")
     public R getHistory(){
         return new R(true, iGraphService.getHistory());
     }
