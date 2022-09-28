@@ -1,10 +1,12 @@
-package com.cse5914backend;
+package com.cse5914backend.elasticSearch.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 import com.cse5914backend.domain.Record;
+import com.cse5914backend.elasticSearch.IDataSearch;
+
 //demo version
-public class DataSearch1 implements IDataSearch{
+public class DataSearch1 implements IDataSearch {
 
     @Override
     public boolean sendHistory(Record record) {

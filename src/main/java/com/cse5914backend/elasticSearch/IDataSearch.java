@@ -1,4 +1,4 @@
-package com.cse5914backend;
+package com.cse5914backend.elasticSearch;
 
 import com.cse5914backend.domain.Record;
 

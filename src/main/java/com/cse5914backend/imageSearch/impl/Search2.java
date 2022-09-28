@@ -1,11 +1,12 @@
-package com.cse5914backend;
+package com.cse5914backend.imageSearch.impl;
 
 import com.cse5914backend.domain.Thing;
+import com.cse5914backend.imageSearch.ISearch;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Search1 implements ISearch{
+public class Search2 implements ISearch {
     @Override
     public boolean sendImage(String path) {
         return true;

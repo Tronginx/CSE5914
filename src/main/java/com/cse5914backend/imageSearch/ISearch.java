@@ -1,4 +1,4 @@
-package com.cse5914backend;
+package com.cse5914backend.imageSearch;
 
 import com.cse5914backend.domain.Thing;
 
