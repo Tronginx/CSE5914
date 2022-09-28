@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class TestController {
@@ -92,5 +93,31 @@ public class TestController {
     @GetMapping("/getHistory")
     public R getHistory(){
         return new R(true, iGraphService.getHistory());
+    }
+
+    //Ajax Test:
+    @RequestMapping("/Aupload")
+    public R aUpload(@RequestParam("file") MultipartFile file) {
+        // 获取上传文件名
+        String filename = file.getOriginalFilename();
+        String suffixName = filename.substring(filename.lastIndexOf("."));
+        // 定义上传文件保存路径
+        String path = filePath + "images/";
+        //生成新的文件名称
+        String newImgName = UUID.randomUUID().toString() + suffixName;
+        // 新建文件
+        File filepath = new File(path, newImgName);
+        // 判断路径是否存在，如果不存在就创建一个
+        if (!filepath.getParentFile().exists()) {
+            filepath.getParentFile().mkdirs();
+        }
+        try {
+            // 写入文件
+            file.transferTo(new File(path + File.separator + newImgName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        List<Thing> searchResult = iGraphService.getResults(path);
+        return new R(true, searchResult);
     }
 }
