@@ -5,22 +5,134 @@ import java.util.List;
 import com.cse5914backend.domain.Record;
 import com.cse5914backend.elasticSearch.IDataSearch;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.HttpHost;
+import org.elasticsearch.ElasticsearchException;
+import org.elasticsearch.action.delete.DeleteRequest;
+import org.elasticsearch.action.delete.DeleteResponse;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
+
+import java.io.IOException;
+import java.util.*;
+
 //demo version
 public class DataSearch1 implements IDataSearch {
 
+
+    //The config parameters for the connection
+    private static final String HOST = "localhost";
+    private static final int PORT_ONE = 9200;
+    private static final int PORT_TWO = 9201;
+    private static final String SCHEME = "http";
+
+    private static RestHighLevelClient restHighLevelClient;
+    private static ObjectMapper objectMapper = new ObjectMapper();
+
+    private static final String INDEX = "record";
+    private static final String TYPE = "_doc";
+
+    /**
+     * Implemented Singleton pattern here
+     * so that there is just one connection at a time.
+     * @return RestHighLevelClient
+     */
+    static synchronized RestHighLevelClient makeConnection() {
+
+        if(restHighLevelClient == null) {
+            restHighLevelClient = new RestHighLevelClient(
+                    RestClient.builder(
+                            new HttpHost(HOST, PORT_ONE, SCHEME),
+                            new HttpHost(HOST, PORT_TWO, SCHEME)));
+        }
+
+        return restHighLevelClient;
+    }
+    static synchronized void closeConnection() throws IOException {
+        restHighLevelClient.close();
+        restHighLevelClient = null;
+    }
+    public DataSearch1(){}
     @Override
-    public boolean sendHistory(Record record) {
-        return false;
+    public boolean sendHistory(Record record){
+        record.setId(UUID.randomUUID().toString());
+        System.out.println("------"+record.getId());
+        String latitude = record.getLatitude();
+        String longitude = record.getLongitude();
+        String path = record.getFilePath();
+        String location = record.getLocation();
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+        dataMap.put("path", path);
+        dataMap.put("location", location);
+        dataMap.put("latitude", latitude);
+        dataMap.put("longitude", longitude);
+        dataMap.put("ID",record.getId());
+
+
+        IndexRequest indexRequest = new IndexRequest(INDEX)
+                .id(record.getId()).source(dataMap);
+        try {
+            IndexResponse response = restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
+        } catch(ElasticsearchException e) {
+            e.getDetailedMessage();
+        } catch (java.io.IOException ex){
+            ex.getLocalizedMessage();
+        }
+        return true;
     }
 
-    public List<Record> getSearchHistory() {
-        List<Record> list = new ArrayList<>();
-        Record r1 = new Record();
-        Record r2 = new Record();
-        list.add(r1);
-        list.add(r2);
-        r1.setLocation("Paris");
-        r2.setLocation("Beijing");
-        return list;
+    public List<Record> getSearchHistory(){
+        List<Record> res = new ArrayList<>();
+
+        List<Map<String,Object>> m = new ArrayList<>();
+        SearchRequest searchRequest = new SearchRequest(INDEX);
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+        final SearchRequest source = searchRequest.source(searchSourceBuilder);
+        SearchResponse response = null;
+        try {
+            response = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+        } catch (java.io.IOException e){
+            e.getLocalizedMessage();
+        }
+        res = getSC(response);
+        return res;
     }
+    private List<Record> getSC(SearchResponse sr) {
+        List<Record> m = new ArrayList<>();
+        for (SearchHit hit : sr.getHits()) {
+            Map<String, Object> source = hit.getSourceAsMap();
+            Record temp = new Record();
+            String location = (String) source.get("location");
+            String ID = (String) source.get("ID");
+            String latitude = (String) source.get("latitude");
+            String longitude = (String) source.get("longitude");
+            String filePath = (String) source.get("filePath");
+            temp.setLatitude(latitude);
+            temp.setLocation(location);
+            temp.setId(ID);
+            temp.setLongitude(longitude);
+            temp.setFilePath(filePath);
+            m.add(temp);
+        }
+        return  m;
+    }
+    public void deleteRecordById(String id) {
+        DeleteRequest deleteRequest = new DeleteRequest(INDEX, TYPE, id);
+        try {
+            DeleteResponse deleteResponse = restHighLevelClient.delete(deleteRequest, RequestOptions.DEFAULT);
+        } catch (java.io.IOException e) {
+            e.getLocalizedMessage();
+        }
+    }
+
+
 }
