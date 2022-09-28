@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class Record {
+    int Id;
     String location; //predicted location
     String filePath;
     String latitude, longitude;
