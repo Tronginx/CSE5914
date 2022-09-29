@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/index.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" defer></script>
+  <script src="js/index.js" defer></script>
+  <title>Grabble - Guessing location</title>
+</head>
+<body class="container" id="body">
+<div class="card" id="UploadImage">
+  <div class="chip">
+    <div class="textRow">Upload your picture</div>
+  </div><br></br>
+  <!--Dan: modified for image display  -->
+  <div class="modal-body">
+    <form method="post" enctype="multipart/form-data">
+      <input type="file" name="file" id="img" onchange="readURL(this);" />
+      <input type="button" value="上传" class="btn btn-outline-primary" onclick="uploadFile()"
+             style="width: 30%;">
+    </form>
+  </div>
+  <!--Dan: modified for image display  -->
+  <p>
+
+    <img id="display-img" src="img/image-placeholder.jpg" width="600px" height="400px">
+
+  </p>
+
+</div>
+<p>
+<div class="card" id="location">
+  <div class="chip">
+    <div class="textRow">Information</div>
+  </div><br></br>
+  <div>
+    <button id="check">Check</button>
+  </div>
+  <p>
+  <div class="img-container" id="Placeholder">
+    <!-- <img src="assets/images/Oval.png"> -->
+  </div>
+  </p>
+</div>
+</p>
+<p>
+  <!--create history table-->
+<div class="card" id="history">
+  <div class="chip">
+    <div class="textRow">History Review</div>
+  </div>
+  <br></br>
+  <div>
+    <button id="checkHistory" onclick="getHistory()">Check Search History</button>
+  </div>
+  <br></br>
+  <table id="historyTable">
+    <thead>
+    <tr>
+      <th>Location</th>
+    </tr>
+    </thead>
+    <tbody id="historyTbody">
+    </tbody>
+  </table>
+</div>
+</p>
+
+</body>
+</html>

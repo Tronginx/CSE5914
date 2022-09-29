@@ -7,12 +7,15 @@ import com.cse5914backend.domain.*;
 import com.cse5914backend.domain.Record;
 import com.cse5914backend.imageSearch.impl.Search1;
 import com.cse5914backend.imageSearch.impl.Search2;
+import com.cse5914backend.service.IDataService;
 import com.cse5914backend.service.IGraphService;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Component("GraphService")
 public class GraphService implements IGraphService {
     ISearch iSearch=new Search1();
     @Override
@@ -25,9 +28,9 @@ public class GraphService implements IGraphService {
         return iSearch.getThings();
     }
 
-    @Override
-    public List<Record> getHistory() {
-        IDataSearch dataSearch = new DataSearch1();
-        return dataSearch.getSearchHistory();
-    }
+//    @Override
+//    public List<Record> getHistory() {
+//        IDataService dataService = new DataService();
+//        return dataService.getSearchHistory();
+//    }
 }
