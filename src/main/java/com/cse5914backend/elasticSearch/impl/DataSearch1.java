@@ -60,9 +60,13 @@ public class DataSearch1 implements IDataSearch {
         restHighLevelClient.close();
         restHighLevelClient = null;
     }
-    public DataSearch1(){}
+    public DataSearch1(){
+
+    }
     @Override
-    public boolean sendHistory(Record record){
+    public boolean sendHistory(Record record) {
+
+            makeConnection();
         record.setId(UUID.randomUUID().toString());
         System.out.println("------"+record.getId());
         String latitude = record.getLatitude();
@@ -86,10 +90,17 @@ public class DataSearch1 implements IDataSearch {
         } catch (java.io.IOException ex){
             ex.getLocalizedMessage();
         }
+        try {
+            closeConnection();
+        }catch (java.io.IOException x)
+        {
+            x.getLocalizedMessage();
+        }
         return true;
     }
 
     public List<Record> getSearchHistory(){
+        makeConnection();
         List<Record> res = new ArrayList<>();
 
         List<Map<String,Object>> m = new ArrayList<>();
@@ -104,6 +115,12 @@ public class DataSearch1 implements IDataSearch {
             e.getLocalizedMessage();
         }
         res = getSC(response);
+        try {
+            closeConnection();
+        }catch (java.io.IOException x)
+        {
+            x.getLocalizedMessage();
+        }
         return res;
     }
     private List<Record> getSC(SearchResponse sr) {
