@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface IGraphService {
     List<Thing> getResults(String filePath);
-    List<Record> getHistory();
+//    List<Record> getHistory();
 }

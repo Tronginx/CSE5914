@@ -1,0 +1,188 @@
+body {
+    background-image: url("../img/background.jpeg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    text-align: center;
+}
+
+.card {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: rgba(250,250,250,0.9);
+    transition: 0.175s;
+    border-radius: 5px;
+    object-fit: contain;
+    background-repeat: no-repeat;
+    padding: 5px;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.chip {
+    display: inline-block;
+    width: 200px;
+    padding: 0 10px;
+    height: 50px;
+    border-radius: 25px;
+    box-sizing: border-box;
+    border: 2px dashed plum;
+    font-style: italic;
+    font-weight: bold;
+    color: darkblue;
+}
+
+.chip .textRow {
+    padding: 7%;
+}
+
+.container {
+    width: 100%;
+}
+
+.img-container {}
+
+img {
+    max-width: 100%;
+    height: fit-content;
+    background-position: center;
+    background-size: cover;
+    box-sizing: border-box;
+    border: 2px dashed plum;
+    border-radius: 5px;
+    padding: 5px;
+}
+img#AIBOT {
+    width: 20%;
+    height: 40%;
+    padding: 3%;
+    margin: 5%;
+}
+
+#UImage {
+    width: 400px;
+    height: 300px;
+    background-position: center;
+    background-size: cover;
+    box-sizing: border-box;
+    border: 2px dashed plum;
+    border-radius: 5px;
+    padding:20px;
+    margin:auto;
+    padding:5px;
+}
+
+textarea {
+    width: 80%;
+    height: auto;
+    padding: 10px;
+    background-position: center;
+    background-size: contain;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    resize: none;
+}
+
+table {
+    width: 100%;
+    height: 100%;
+}
+thead {
+    background-color: white;
+}
+tbody tr:nth-child(odd) {
+    background-color: lightgray;
+}
+tbody tr:nth-child(even){
+    background-color: white;
+}
+
+#OSU, #Tower, #Pole, #NoOutput, #DifferentOutput{
+    transition: .2s;
+    font-size: 100px;
+    padding: 5%;
+    color: white;
+}
+#OSU:hover, #Tower:hover, #Pole:hover, #NoOutput:hover, #DifferentOutput:hover {
+    text-shadow: 
+    0 0 10px black,
+    0 0 20px black,
+    0 0 50px black,
+    0 0 100px black,
+    0 0 200px black
+}
+/*make mockup switch button invisible but still functionable*/
+#OSUPredict, #PolePredict, #TowerPredict{
+    opacity: 0.03;
+}
+
+.ai-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.ai-chat {
+	height: 300px;
+	width: 50vw;
+	display: flex;
+	flex-direction: column;
+  justify-content: center;
+	align-items: center;
+} 
+
+::-webkit-input-placeholder { 
+	color: .711 
+}
+
+input#input { 
+	border: 0; 
+	padding: 15px; 
+	margin-left: auto;
+	border-radius: 10px; 
+}
+
+.ai-message {
+	display: flex;
+	flex-direction: column;
+	overflow: scroll;
+	height: 90%;
+	width: 100%;
+	background-color: white;
+	padding: 15px;
+	margin: 15px;
+	border-radius: 10px;
+}
+
+#bot {
+	margin-right: auto;
+}
+
+#user {
+	margin-left: auto;
+}
+
+.bot {
+	font-family: Consolas, 'Courier New', Menlo, source-code-pro, Monaco,  
+	monospace;
+}
+
+.avatar {
+	height: 25px;
+}
+
+.response {
+	display: flex;
+	align-items: center;
+	margin: 1%;
+}
