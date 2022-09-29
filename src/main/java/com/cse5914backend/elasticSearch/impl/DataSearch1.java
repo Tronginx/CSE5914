@@ -74,7 +74,7 @@ public class DataSearch1 implements IDataSearch {
         String path = record.getFilePath();
         String location = record.getLocation();
         Map<String, Object> dataMap = new HashMap<String, Object>();
-        dataMap.put("path", path);
+        dataMap.put("filePath", path);
         dataMap.put("location", location);
         dataMap.put("latitude", latitude);
         dataMap.put("longitude", longitude);
@@ -123,6 +123,7 @@ public class DataSearch1 implements IDataSearch {
         }
         return res;
     }
+
     private List<Record> getSC(SearchResponse sr) {
         List<Record> m = new ArrayList<>();
         for (SearchHit hit : sr.getHits()) {
@@ -142,12 +143,20 @@ public class DataSearch1 implements IDataSearch {
         }
         return  m;
     }
+
     public void deleteRecordById(String id) {
+        makeConnection();
         DeleteRequest deleteRequest = new DeleteRequest(INDEX, TYPE, id);
         try {
             DeleteResponse deleteResponse = restHighLevelClient.delete(deleteRequest, RequestOptions.DEFAULT);
         } catch (java.io.IOException e) {
             e.getLocalizedMessage();
+        }
+        try {
+            closeConnection();
+        }catch (java.io.IOException x)
+        {
+            x.getLocalizedMessage();
         }
     }
 

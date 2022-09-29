@@ -2,6 +2,9 @@ package com.cse5914backend.controller;
 
 import com.cse5914backend.controller.utils.R;
 import com.cse5914backend.domain.Thing;
+import com.cse5914backend.domain.Record;
+import com.cse5914backend.elasticSearch.IDataSearch;
+import com.cse5914backend.elasticSearch.impl.DataSearch1;
 import com.cse5914backend.service.IGraphService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -117,7 +120,17 @@ public class TestController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        List<Thing> searchResult = iGraphService.getResults(path);
+        List<Thing> searchResult = iGraphService.getResults(path + File.separator + newImgName);
+        //store result to elastic search
+        IDataSearch iDataSearch = new DataSearch1();
+        for(Thing thing: searchResult) {
+            Record record = new Record();
+            record.setLocation(thing.getName());
+            record.setFilePath(path + File.separator + newImgName);
+            record.setLatitude(thing.getLocations().get(0));
+            //record.setLongitude(thing.getLocations().get(1));
+            iDataSearch.sendHistory(record);
+        }
         return new R(true, searchResult);
     }
 }

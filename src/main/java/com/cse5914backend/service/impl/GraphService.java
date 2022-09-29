@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 public class GraphService implements IGraphService {
-    ISearch iSearch=new Search2();
+    ISearch iSearch=new Search1();
     @Override
     public List<Thing> getResults(String filePath) {
         boolean readFile = iSearch.sendImage(filePath);
