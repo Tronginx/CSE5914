@@ -12,6 +12,12 @@ function readURL(input) {
 
 //上传文件
 function uploadFile() {
+    // detect any table left before uploading new one
+    var infoLeft = document.getElementById('infoTable');
+    if (infoLeft != null){
+        infoLeft.remove();
+    }
+
     //formData里面存储的数据形式，一对key/value组成一条数据，key是唯一的，一个key可能对应多个value
     var myform = new FormData();
     // 此时可以调用append()方法来添加数据
@@ -37,64 +43,25 @@ function uploadFile() {
                 $("#div_show_img").html("<img id='input_img' src='" + result + "'>");
                 $("#imgPath").attr("value", result);
                 $("#div_upload").removeClass("show");
-                let table = document.createElement('table');
-                let thead = document.createElement('thead');
-                let tbody = document.createElement('tbody');
+                let infoTable = document.createElement('table');
+                let infoHead = document.createElement('thead');
+                let infoBody = document.createElement('tbody');
+                infoTable.appendChild(infoHead);
+                infoTable.appendChild(infoBody);
+                infoTable.setAttribute('id', 'infoTable');
+                document.getElementById('Placeholder').appendChild(infoTable);
+                infoTable.style.width = '100%';
+                infoTable.style.border = '1px solid black';
 
-                table.appendChild(thead);
-                table.appendChild(tbody);
-                document.getElementById('Placeholder').appendChild(table);
+                let headings = `<tr><th>Check</th><th>Name</th><th>Location</th></tr>`
+                infoHead.innerHTML += headings;
 
-                table.style.width = '100%';
-                table.style.border = '1px solid black';
-
-                // Creating and adding data to first row of the table
-                let row_1 = document.createElement('tr');
-                let heading_id = document.createElement('th');
-                heading_id.innerHTML = "Check";
-                let heading_1 = document.createElement('th');
-                heading_1.innerHTML = "Name";
-                let heading_2 = document.createElement('th');
-                heading_2.innerHTML = "Location";
-
-                row_1.appendChild(heading_id);
-                row_1.appendChild(heading_1);
-                row_1.appendChild(heading_2);
-                thead.appendChild(row_1);
-
-                // Creating and adding data to second row of the table
-                let row_2 = document.createElement('tr');
-                let row_2_data_id = document.createElement('td');
-                let checkbox1 = document.createElement('input');
-                checkbox1.type = 'checkbox';
-                row_2_data_id.appendChild(checkbox1);
-                let row_2_data_1 = document.createElement('td');
-                row_2_data_1.innerHTML = result['data'][0]['name'];
-                let row_2_data_2 = document.createElement('td');
-                row_2_data_2.innerHTML = result['data'][0]['locations'];
-
-                row_2.appendChild(row_2_data_id);
-                row_2.appendChild(row_2_data_1);
-                row_2.appendChild(row_2_data_2);
-                tbody.appendChild(row_2);
-
-
-                // Creating and adding data to third row of the table
-                let row_3 = document.createElement('tr');
-                let row_3_data_id = document.createElement('td');
-                let checkbox2 = document.createElement('input');
-                checkbox2.type = 'checkbox';
-                row_3_data_id.appendChild(checkbox2);
-                let row_3_data_1 = document.createElement('td');
-                row_3_data_1.innerHTML = result['data'][1]['name'];
-                let row_3_data_2 = document.createElement('td');
-                row_3_data_2.innerHTML = result['data'][1]['locations'];
-
-                row_3.appendChild(row_3_data_id);
-                row_3.appendChild(row_3_data_1);
-                row_3.appendChild(row_3_data_2);
-                tbody.appendChild(row_3);
-
+                for (let i = 0; i < result['data'].length; i++){
+                    let row = `<tr><td><input type='checkbox'></td>
+                                   <td>${result['data'][i]['name']}</td>
+                                   <td>${result['data'][i]['locations']}</td></tr>`
+                    infoBody.innerHTML += row
+                }
             },
             error: function (data) {
                 alert("系统错误");
