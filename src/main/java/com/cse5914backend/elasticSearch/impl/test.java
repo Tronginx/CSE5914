@@ -22,7 +22,7 @@ public class test {
 //        es.sendHistory(r1);
 
 
-        es.deleteRecordById("d597ce78-a628-4579-8daf-e83417b52905");
+
         List<Record> m =es.getSearchHistory();
         System.out.println(m);
     }
