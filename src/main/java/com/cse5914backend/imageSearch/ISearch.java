@@ -11,7 +11,12 @@ public interface ISearch {
 
     //send image, return true if able to open
     boolean sendImage(String path);
-    //return things disover on image
+
+    /**
+     * return things searched only for current search
+     * Remember to clean list
+     * @return
+     */
     List<Thing> getThings();
 
 }

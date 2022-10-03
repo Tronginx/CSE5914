@@ -71,6 +71,8 @@ public class Search1 implements ISearch {
 
     @Override
     public List<Thing> getThings() {
-        return things;
+        List<Thing> res = things;
+        things = new ArrayList<>();
+        return res;
     }
 }

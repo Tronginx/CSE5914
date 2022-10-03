@@ -144,7 +144,7 @@ public class DataSearch1 implements IDataSearch {
         return  m;
     }
 
-    public void deleteRecordById(String id) {
+    public void deleteRecordById(String id) throws IOException {
         makeConnection();
         DeleteRequest deleteRequest = new DeleteRequest(INDEX, TYPE, id);
         try {

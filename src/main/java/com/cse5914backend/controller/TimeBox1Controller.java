@@ -61,6 +61,7 @@ public class TimeBox1Controller {
             filepath.getParentFile().mkdirs();
         }
         String newPath = path + File.separator + newImgName;
+        System.out.println("---------"+newPath);
         try {
             // 写入文件
             file.transferTo(new File(newPath));

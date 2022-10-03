@@ -21,10 +21,13 @@ public class test {
 //
 //        es.sendHistory(r1);
 
-
-
         List<Record> m =es.getSearchHistory();
-        System.out.println(m);
+        for (Record t:m
+             ) {
+            es.deleteRecordById(t.getId());
+        }
+        List<Record> me =es.getSearchHistory();
+     System.out.println(me.size());
     }
 
 }

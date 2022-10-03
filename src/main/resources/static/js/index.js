@@ -25,7 +25,7 @@ function uploadFile() {
     //验证不为空
     var file = $("#img")[0].files[0];
     if (file == null) {
-        alert("请选择文件");
+        alert("Please choose file you want to recognize");
         return false;
     } else {
         $.ajax({
@@ -37,6 +37,7 @@ function uploadFile() {
             processData: false,
             success: function (result) {// result 是传回来的json
                 //TODO: NOTE :result.data是一个 Thing list， 用array接收
+                document.getElementById('Placeholder').innerHTML="";
                 //data[i].name是地名，data[i].locations是array， locations(0) is longitude, (1)is latitude
                 console.log(result['data']);
                 alert("Successfully uploaded!");
