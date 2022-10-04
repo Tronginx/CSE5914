@@ -58,10 +58,54 @@ public class Search1 implements ISearch {
         }
     }
 
+    /**
+     * Detects localized objects in the specified local image.
+     *
+     * @param filePath The path to the file to perform localized object detection on.
+     * @throws Exception on errors while closing the client.
+     * @throws IOException on Input/Output errors.
+     */
+    public static void detectLocalizedObjects(String filePath) throws IOException {
+        List<AnnotateImageRequest> requests = new ArrayList<>();
+
+        ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
+
+        Image img = Image.newBuilder().setContent(imgBytes).build();
+        AnnotateImageRequest request =
+                AnnotateImageRequest.newBuilder()
+                        .addFeatures(Feature.newBuilder().setType(Feature.Type.OBJECT_LOCALIZATION))
+                        .setImage(img)
+                        .build();
+        requests.add(request);
+
+        // Initialize client that will be used to send requests. This client only needs to be created
+        // once, and can be reused for multiple requests. After completing all of your requests, call
+        // the "close" method on the client to safely clean up any remaining background resources.
+        try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+            // Perform the request
+            BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+            List<AnnotateImageResponse> responses = response.getResponsesList();
+
+            // Display the results
+            for (AnnotateImageResponse res : responses) {
+                for (LocalizedObjectAnnotation entity : res.getLocalizedObjectAnnotationsList()) {
+                    System.out.format("Object name: %s%n", entity.getName());
+                    System.out.format("Confidence: %s%n", entity.getScore());
+                    System.out.format("Normalized Vertices:%n");
+                    entity
+                            .getBoundingPoly()
+                            .getNormalizedVerticesList()
+                            .forEach(vertex -> System.out.format("- (%s, %s)%n", vertex.getX(), vertex.getY()));
+                }
+            }
+        }
+    }
+
     @Override
     public boolean sendImage(String path) {
         try {
             Search1.detectLandmarks(path);
+            Search1.detectLocalizedObjects(path);
             return true;
         } catch (IOException e) {
             System.out.println("ERROR:" + e);
