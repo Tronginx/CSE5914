@@ -51,21 +51,21 @@ function uploadFile() {
                 details = result['data'][1];
                 buildLandMarkTable(landmarks);
                 buildDetailTable(details);
-                // detailGraph();
+                let img = $("#img")[0].files[0];
+                // detailGraph(img, details);
                 // TODO: draw blocks on the picture
-                function detailGraph(){
-                    let canvas = document.getElementById('imgPath');
+                function detailGraph(img, details){
+                    let canvas = document.querySelector('#detailPicture');
                     let ctx = canvas.getContext('2d');
-                    let img = document.getElementById('input_img');
                     canvas.width = img.width;
                     canvas.height = img.height;
                     ctx.drawImage(img, 0, 0, img.width, img.height);
                     ctx.strokeStyle = 'red';
-                    for (let i = 0; i < result['data'][1].length; i++){
-                        ctx.moveTo(result['data'][1][i]['vertex'][0], result['data'][1][i]['vertex'][1]);
-                        ctx.lineTo(result['data'][1][i]['vertex'][2], result['data'][1][i]['vertex'][3]);
-                        ctx.lineTo(result['data'][1][i]['vertex'][4], result['data'][1][i]['vertex'][5]);
-                        ctx.lineTo(result['data'][1][i]['vertex'][6], result['data'][1][i]['vertex'][7]);
+                    for (let i = 0; i < details.length; i++){
+                        ctx.moveTo(details[i]['vertex'][0], details[i]['vertex'][1]);
+                        ctx.lineTo(details[i]['vertex'][2], details[i]['vertex'][3]);
+                        ctx.lineTo(details[i]['vertex'][4], details[i]['vertex'][5]);
+                        ctx.lineTo(details[i]['vertex'][6], details[i]['vertex'][7]);
                     }
                     ctx.closePath();
                     ctx.stroke();
