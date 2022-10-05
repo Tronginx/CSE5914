@@ -13,24 +13,12 @@ public class test {
 
     public static void main(String[] args) throws IOException {
         DataSearch1 es = new DataSearch1();
-//        Record r1 = new Record();
-//        r1.setLatitude("892342");
-//        r1.setLocation("QWERT");
-//        r1.setFilePath("C//Desktop");
-//        r1.setLongitude("8638378");
-//
-//        es.sendHistory(r1);
-
-
-
         List<Record> m =es.getSearchHistory();
-        for(int a=0;a<m.size();a++)
-        {
+        for(int a=0;a<m.size();a++){
             es.deleteRecordById(m.get(a).getId());
         }
         m=es.getSearchHistory();
         System.out.println(m);
-
 
     }
 

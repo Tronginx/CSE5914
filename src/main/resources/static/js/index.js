@@ -93,6 +93,7 @@ function uploadFile() {
                                        <td>${result['data'][1][i]['confidence']}</td><td>`
                         for (let j = 0; j < result['data'][1][i]['vertex'].length; j++) {
                             row += `[${result['data'][1][i]['vertex'][j]}, ${result['data'][1][i]['vertex'][j+1]}] `;
+                            j++;
                         }
                         row += '</td></tr>';
                         infoBody.innerHTML += row
