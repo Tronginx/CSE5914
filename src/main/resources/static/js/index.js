@@ -13,9 +13,13 @@ function readURL(input) {
 //上传文件
 function uploadFile() {
     // detect any table left before uploading new one
-    var infoLeft = document.getElementById('infoTable');
-    if (infoLeft != null){
-        infoLeft.remove();
+    var infoLeft1 = document.getElementById('landMarkTable');
+    if (infoLeft1 != null){
+        infoLeft1.remove();
+    }
+    var infoLeft2 = document.getElementById('detailTable');
+    if (infoLeft2 != null){
+        infoLeft2.remove();
     }
 
     //formData里面存储的数据形式，一对key/value组成一条数据，key是唯一的，一个key可能对应多个value
@@ -43,24 +47,53 @@ function uploadFile() {
                 $("#div_show_img").html("<img id='input_img' src='" + result + "'>");
                 $("#imgPath").attr("value", result);
                 $("#div_upload").removeClass("show");
-                let infoTable = document.createElement('table');
-                let infoHead = document.createElement('thead');
-                let infoBody = document.createElement('tbody');
-                infoTable.appendChild(infoHead);
-                infoTable.appendChild(infoBody);
-                infoTable.setAttribute('id', 'infoTable');
-                document.getElementById('Placeholder').appendChild(infoTable);
-                infoTable.style.width = '100%';
-                infoTable.style.border = '1px solid black';
+                infoArray = response['data'];
+                buildLandMarkTable(infoArray);
+                buildDetailTable(infoArray);
 
-                let headings = `<tr><th>Check</th><th>Name</th><th>Location</th></tr>`
-                infoHead.innerHTML += headings;
+                function buildLandMarkTable(data) {
+                    let infoTable = document.createElement('table');
+                    let infoHead = document.createElement('thead');
+                    let infoBody = document.createElement('tbody');
+                    infoTable.appendChild(infoHead);
+                    infoTable.appendChild(infoBody);
+                    infoTable.setAttribute('id', 'landMarkTable');
+                    document.getElementById('Placeholder1').appendChild(infoTable);
+                    infoTable.style.width = '100%';
+                    infoTable.style.border = '1px solid black';
 
-                for (let i = 0; i < result['data'].length; i++){
-                    let row = `<tr><td><input type='checkbox'></td>
-                                   <td>${result['data'][i]['name']}</td>
-                                   <td>${result['data'][i]['locations']}</td></tr>`
-                    infoBody.innerHTML += row
+                    let headings = `<tr><th>Check</th><th>Name</th><th>Location</th></tr>`
+                    infoHead.innerHTML += headings;
+
+                    for (let i = 0; i < result['data'][0].length; i++){
+                        let row = `<tr><td><input type='checkbox'></td>
+                                       <td>${result['data'][0][i]['name']}</td>
+                                       <td>${result['data'][0][i]['locations']}</td></tr>`
+                        infoBody.innerHTML += row
+                    }
+                }
+
+                function buildDetailTable(data) {
+                    let infoTable = document.createElement('table');
+                    let infoHead = document.createElement('thead');
+                    let infoBody = document.createElement('tbody');
+                    infoTable.appendChild(infoHead);
+                    infoTable.appendChild(infoBody);
+                    infoTable.setAttribute('id', 'detailTable');
+                    document.getElementById('Placeholder2').appendChild(infoTable);
+                    infoTable.style.width = '100%';
+                    infoTable.style.border = '1px solid black';
+
+                    let headings = `<tr><th>Check</th><th>Name</th><th>Confidence</th><th>Vertex</th></tr>`
+                    infoHead.innerHTML += headings;
+
+                    for (let i = 0; i < result['data'][1].length; i++){
+                        let row = `<tr><td><input type='checkbox'></td>
+                                       <td>${result['data'][1][i]['name']}</td>
+                                       <td>${result['data'][1][i]['confidence']}</td>
+                                       <td>${result['data'][1][i]['vertex']}</td></tr>`
+                        infoBody.innerHTML += row
+                    }
                 }
             },
             error: function (data) {
@@ -69,6 +102,7 @@ function uploadFile() {
         });
     }
 }
+
 /*------------------*/
 //Get history part
 // fetch history data

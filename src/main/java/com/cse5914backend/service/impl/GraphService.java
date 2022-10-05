@@ -28,6 +28,17 @@ public class GraphService implements IGraphService {
         return iSearch.getThings();
     }
 
+    @Override
+    public List<LocalizedObject> getDetails(String filePath) {
+        boolean readFile = iSearch.sendImage(filePath);
+        if(!readFile) {
+            System.out.println("Failed to read file.");
+            return null;
+        }
+        return iSearch.getLocalizedObjects();
+    }
+
+
 //    @Override
 //    public List<Record> getHistory() {
 //        IDataService dataService = new DataService();

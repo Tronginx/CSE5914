@@ -1,6 +1,7 @@
 package com.cse5914backend.controller;
 
 import com.cse5914backend.controller.utils.R;
+import com.cse5914backend.domain.LocalizedObject;
 import com.cse5914backend.domain.Record;
 import com.cse5914backend.domain.Thing;
 import com.cse5914backend.elasticSearch.IDataSearch;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -68,10 +70,14 @@ public class TimeBox1Controller {
             e.printStackTrace();
         }
         List<Thing> searchResult = iGraphService.getResults(newPath);
+        List<LocalizedObject> detailResult = iGraphService.getDetails(newPath);
+        List<Object> result = new ArrayList<Object>();
+        result.add(searchResult);
+        result.add(detailResult);
         // store history to IDataSearch
         //TODO: maybe need a try catch?
         dataService.sendHistory(searchResult, newPath);
-        return new R(true, searchResult);
+        return new R(true, result);
     }
 
     // return search history

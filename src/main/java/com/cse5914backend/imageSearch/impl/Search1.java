@@ -5,11 +5,14 @@ import com.cse5914backend.domain.Thing;
 import com.cse5914backend.imageSearch.ISearch;
 import com.google.cloud.vision.v1.*;
 import com.google.protobuf.ByteString;
+import com.google.protobuf.MapEntry;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Search1 implements ISearch {
 
@@ -61,19 +64,18 @@ public class Search1 implements ISearch {
     }
 
     /**
-     * Detects localized objects in a remote image on Google Cloud Storage.
+     * Detects localized objects in the specified local image.
      *
-     * @param gcsPath The path to the remote file on Google Cloud Storage to detect localized objects
-     *     on.
+     * @param filePath The path to the file to perform localized object detection on.
      * @throws Exception on errors while closing the client.
      * @throws IOException on Input/Output errors.
      */
-    public static void detectLocalizedObjectsGcs(String gcsPath) throws IOException {
+    public static void detectLocalizedObjects(String filePath) throws IOException {
         List<AnnotateImageRequest> requests = new ArrayList<>();
 
-        ImageSource imgSource = ImageSource.newBuilder().setGcsImageUri(gcsPath).build();
-        Image img = Image.newBuilder().setSource(imgSource).build();
+        ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
 
+        Image img = Image.newBuilder().setContent(imgBytes).build();
         AnnotateImageRequest request =
                 AnnotateImageRequest.newBuilder()
                         .addFeatures(Feature.newBuilder().setType(Feature.Type.OBJECT_LOCALIZATION))
@@ -88,15 +90,25 @@ public class Search1 implements ISearch {
             // Perform the request
             BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
             List<AnnotateImageResponse> responses = response.getResponsesList();
-            client.close();
+
             // Display the results
             for (AnnotateImageResponse res : responses) {
                 if (res.hasError()) {
                     System.out.format("Error: %s%n", res.getError().getMessage());
                     return;
                 }
-                // TODO: Change over here
                 for (LocalizedObjectAnnotation entity : res.getLocalizedObjectAnnotationsList()) {
+                    LocalizedObject tmp = new LocalizedObject();
+                    tmp.setName(entity.getName());
+                    tmp.setConfidence(entity.getScore());
+                    tmp.setVertex(new ArrayList<>());
+                    for (NormalizedVertex v : entity.getBoundingPoly().getNormalizedVerticesList()) {
+                        Map.Entry<String,Float> x = Map.entry("x", v.getX());
+                        Map.Entry<String,Float> y = Map.entry("y", v.getY());
+                        tmp.getVertex().add(x);
+                        tmp.getVertex().add(y);
+                    }
+                    objects.add(tmp);
                     System.out.format("Object name: %s%n", entity.getName());
                     System.out.format("Confidence: %s%n", entity.getScore());
                     System.out.format("Normalized Vertices:%n");
@@ -113,7 +125,7 @@ public class Search1 implements ISearch {
     public boolean sendImage(String path) {
         try {
             Search1.detectLandmarks(path);
-            Search1.detectLandmarks(path);
+            Search1.detectLocalizedObjects(path);
             return true;
         } catch (IOException e) {
             System.out.println("ERROR:" + e);
