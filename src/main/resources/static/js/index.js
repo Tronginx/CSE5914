@@ -13,13 +13,17 @@ function readURL(input) {
 //上传文件
 function uploadFile() {
     // detect any table left before uploading new one
-    var infoLeft1 = document.getElementById('landMarkTable');
+    var infoLeft1 = document.getElementById('landmarkTable');
+    console.log(infoLeft1 != null);
     if (infoLeft1 != null){
-        infoLeft1.remove();
+        infoLeft1.remove(); // TODO: seems to have a problem with remove method
+        console.log('remove first one succeed');
     }
     var infoLeft2 = document.getElementById('detailTable');
+    console.log(infoLeft2 != null);
     if (infoLeft2 != null){
         infoLeft2.remove();
+        console.log('remove second one succeed');
     }
 
     //formData里面存储的数据形式，一对key/value组成一条数据，key是唯一的，一个key可能对应多个value
@@ -60,20 +64,27 @@ function uploadFile() {
                     let ctx = canvas.getContext('2d');
                     canvas.width = img.width;
                     canvas.height = img.height;
-                    ctx.drawImage(img, 0, 0, img.width, img.height);
-                    ctx.strokeStyle = 'red';
-                    ctx.lineWidth = 5;
-                    for (let i = 0; i < details.length; i++){
-                        ctx.beginPath();
-                        console.log('start drawing');
-                        console.log(details[i]['vertex'][0]);
-                        ctx.moveTo(details[i]['vertex'][0], details[i]['vertex'][1]);
-                        ctx.lineTo(details[i]['vertex'][2], details[i]['vertex'][3]);
-                        ctx.lineTo(details[i]['vertex'][4], details[i]['vertex'][5]);
-                        ctx.lineTo(details[i]['vertex'][6], details[i]['vertex'][7]);
-                        console.log('finish drawing');
-                        ctx.stroke();
+                    let loadImg = new Image();
+                    loadImg.src = img.src;
+                    loadImg.onload = function(){
+                        ctx.drawImage(img, 0, 0, img.width, img.height);
+                        ctx.strokeStyle = 'red';
+                        // ctx.lineWidth = 5;
+                        for (let i = 0; i < details.length; i++){
+                            let name = details[i]['name'];
+                            console.log('start drawing');
+                            console.log(details[i]['vertex'][0]);
+                            ctx.moveTo(details[i]['vertex'][0]*100, details[i]['vertex'][1]*100);
+                            ctx.lineTo(details[i]['vertex'][2]*100, details[i]['vertex'][3]*100);
+                            ctx.lineTo(details[i]['vertex'][4]*100, details[i]['vertex'][5]*100);
+                            ctx.lineTo(details[i]['vertex'][6]*100, details[i]['vertex'][7]*100);
+                            ctx.fillText(name, details[i]['vertex'][0]*100, details[i]['vertex'][1]*100);
+                            ctx.stroke();
+                            console.log('finish drawing');
+                        }
                     }
+
+
                 }
 
                 function buildLandMarkTable(data) {
@@ -82,7 +93,7 @@ function uploadFile() {
                     let infoBody = document.createElement('tbody');
                     infoTable.appendChild(infoHead);
                     infoTable.appendChild(infoBody);
-                    infoTable.setAttribute('id', 'landMarkTable');
+                    infoTable.setAttribute('id', 'landmarkTable');
                     document.getElementById('Placeholder1').appendChild(infoTable);
                     infoTable.style.width = '100%';
                     infoTable.style.border = '1px solid black';
