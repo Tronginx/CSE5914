@@ -103,10 +103,8 @@ public class Search1 implements ISearch {
                     tmp.setConfidence(entity.getScore());
                     tmp.setVertex(new ArrayList<>());
                     for (NormalizedVertex v : entity.getBoundingPoly().getNormalizedVerticesList()) {
-                        Map.Entry<String,Float> x = Map.entry("x", v.getX());
-                        Map.Entry<String,Float> y = Map.entry("y", v.getY());
-                        tmp.getVertex().add(x);
-                        tmp.getVertex().add(y);
+                        tmp.getVertex().add(v.getX());
+                        tmp.getVertex().add(v.getY());
                     }
                     objects.add(tmp);
                     System.out.format("Object name: %s%n", entity.getName());

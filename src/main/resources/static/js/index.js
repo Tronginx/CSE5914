@@ -47,7 +47,7 @@ function uploadFile() {
                 $("#div_show_img").html("<img id='input_img' src='" + result + "'>");
                 $("#imgPath").attr("value", result);
                 $("#div_upload").removeClass("show");
-                infoArray = response['data'];
+                infoArray = result['data'];
                 buildLandMarkTable(infoArray);
                 buildDetailTable(infoArray);
 
@@ -90,8 +90,11 @@ function uploadFile() {
                     for (let i = 0; i < result['data'][1].length; i++){
                         let row = `<tr><td><input type='checkbox'></td>
                                        <td>${result['data'][1][i]['name']}</td>
-                                       <td>${result['data'][1][i]['confidence']}</td>
-                                       <td>${result['data'][1][i]['vertex']}</td></tr>`
+                                       <td>${result['data'][1][i]['confidence']}</td><td>`
+                        for (let j = 0; j < result['data'][1][i]['vertex'].length; j++) {
+                            row += `[${result['data'][1][i]['vertex'][j]}, ${result['data'][1][i]['vertex'][j+1]}] `;
+                        }
+                        row += '</td></tr>';
                         infoBody.innerHTML += row
                     }
                 }

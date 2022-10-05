@@ -9,7 +9,7 @@ import java.util.Map;
 public class LocalizedObject {
     String name;
     Float confidence;
-    List<Map.Entry<String, Float>>vertex;
+    List<Float>vertex;
 //    int x1, y1;
 //    int x2, y2;
 //    int x3, y3;
