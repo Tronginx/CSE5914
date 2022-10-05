@@ -122,12 +122,14 @@ function getHistory() {
         }
     })
 
+// TODO: consider add 'clear' method to the history table
     function buildTable(data) {
         let historyTable = document.getElementById('historyTable')
-        let tbody = document.getElementById('historyTbody');
+        let tbody = document.getElementById('historybody');
         tbody.innerHTML = "";
         for (let i = 0; i < data.length; i++) {
             let row = `<tr>
+                            <td><input type='checkbox'></td>
 							<td>${data[i].location}</td>
 					  </tr>`
             tbody.innerHTML += row

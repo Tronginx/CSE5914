@@ -12,7 +12,10 @@ import java.util.List;
  */
 public class Search2 implements ISearch {
     @Override
-    public boolean sendImage(String path) {
+    public boolean sendImage1(String path) {
+        return true;
+    }
+    public boolean sendImage2(String path) {
         return true;
     }
 

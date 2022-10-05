@@ -120,9 +120,19 @@ public class Search1 implements ISearch {
     }
 
     @Override
-    public boolean sendImage(String path) {
+    public boolean sendImage1(String path) {
         try {
             Search1.detectLandmarks(path);
+            return true;
+        } catch (IOException e) {
+            System.out.println("ERROR:" + e);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean sendImage2(String path) {
+        try {
             Search1.detectLocalizedObjects(path);
             return true;
         } catch (IOException e) {

@@ -11,7 +11,8 @@ import java.util.List;
 public interface ISearch {
 
     //send image, return true if able to open
-    boolean sendImage(String path);
+    boolean sendImage1(String path);
+    boolean sendImage2(String path);
     //return things disover on image
     List<Thing> getThings();
     List<LocalizedObject> getLocalizedObjects();
