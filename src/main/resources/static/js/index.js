@@ -47,9 +47,29 @@ function uploadFile() {
                 $("#div_show_img").html("<img id='input_img' src='" + result + "'>");
                 $("#imgPath").attr("value", result);
                 $("#div_upload").removeClass("show");
-                infoArray = result['data'];
-                buildLandMarkTable(infoArray);
-                buildDetailTable(infoArray);
+                landmarks = result['data'][0];
+                details = result['data'][1];
+                buildLandMarkTable(landmarks);
+                buildDetailTable(details);
+                // detailGraph();
+                // TODO: draw blocks on the picture
+                function detailGraph(){
+                    let canvas = document.getElementById('imgPath');
+                    let ctx = canvas.getContext('2d');
+                    let img = document.getElementById('input_img');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0, img.width, img.height);
+                    ctx.strokeStyle = 'red';
+                    for (let i = 0; i < result['data'][1].length; i++){
+                        ctx.moveTo(result['data'][1][i]['vertex'][0], result['data'][1][i]['vertex'][1]);
+                        ctx.lineTo(result['data'][1][i]['vertex'][2], result['data'][1][i]['vertex'][3]);
+                        ctx.lineTo(result['data'][1][i]['vertex'][4], result['data'][1][i]['vertex'][5]);
+                        ctx.lineTo(result['data'][1][i]['vertex'][6], result['data'][1][i]['vertex'][7]);
+                    }
+                    ctx.closePath();
+                    ctx.stroke();
+                }
 
                 function buildLandMarkTable(data) {
                     let infoTable = document.createElement('table');
@@ -65,10 +85,10 @@ function uploadFile() {
                     let headings = `<tr><th>Check</th><th>Name</th><th>Location</th></tr>`
                     infoHead.innerHTML += headings;
 
-                    for (let i = 0; i < result['data'][0].length; i++){
+                    for (let i = 0; i < data.length; i++){
                         let row = `<tr><td><input type='checkbox'></td>
-                                       <td>${result['data'][0][i]['name']}</td>
-                                       <td>${result['data'][0][i]['locations']}</td></tr>`
+                                       <td>${data[i]['name']}</td>
+                                       <td>${data[i]['locations']}</td></tr>`
                         infoBody.innerHTML += row
                     }
                 }
@@ -87,12 +107,12 @@ function uploadFile() {
                     let headings = `<tr><th>Check</th><th>Name</th><th>Confidence</th><th>Vertex</th></tr>`
                     infoHead.innerHTML += headings;
 
-                    for (let i = 0; i < result['data'][1].length; i++){
+                    for (let i = 0; i < data.length; i++){
                         let row = `<tr><td><input type='checkbox'></td>
-                                       <td>${result['data'][1][i]['name']}</td>
-                                       <td>${result['data'][1][i]['confidence']}</td><td>`
-                        for (let j = 0; j < result['data'][1][i]['vertex'].length; j++) {
-                            row += `[${result['data'][1][i]['vertex'][j]}, ${result['data'][1][i]['vertex'][j+1]}] `;
+                                       <td>${data[i]['name']}</td>
+                                       <td>${data[i]['confidence']}</td><td>`
+                        for (let j = 0; j <data[i]['vertex'].length; j++) {
+                            row += `[${data[i]['vertex'][j]}, ${data[i]['vertex'][j+1]}] `;
                             j++;
                         }
                         row += '</td></tr>';
