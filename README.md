@@ -1,8 +1,12 @@
 # CSE5914
 Repo for CSE5914 team project
 
-## Current problems:
-- The coordinates within the json file doesn't seem to be the exact coordinate on graph
+## Current new features:
+- Fix the 'Upload' bug: Click the 'Upload' now and it only shows the current result
+- Draw the detailed objects on graph
 
-## Possible new features
+## Current problems:
+- 'Check history' bug: Multiple history result
+
+## Possible new features:
 - Add 'clear records' inside elasticsearch
