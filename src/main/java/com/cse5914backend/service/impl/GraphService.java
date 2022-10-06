@@ -38,6 +38,11 @@ public class GraphService implements IGraphService {
         return iSearch.getLocalizedObjects();
     }
 
+    @Override
+    public List<Thing> getHistory(String filePath) {
+        return iSearch.getHistory();
+    }
+
 
 //    @Override
 //    public List<Record> getHistory() {

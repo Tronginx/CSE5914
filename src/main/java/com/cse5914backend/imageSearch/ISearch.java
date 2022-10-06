@@ -16,5 +16,6 @@ public interface ISearch {
     //return things disover on image
     List<Thing> getThings();
     List<LocalizedObject> getLocalizedObjects();
+    List<Thing> getHistory();
 
 }

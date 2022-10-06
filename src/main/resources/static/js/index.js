@@ -13,13 +13,13 @@ function readURL(input) {
 //上传文件
 function uploadFile() {
     // detect any table left before uploading new one
-    var infoLeft1 = document.getElementById('landmarkTable');
+    let infoLeft1 = document.getElementById('landmarkTable');
     console.log(infoLeft1 != null);
     if (infoLeft1 != null){
-        infoLeft1.remove(); // TODO: seems to have a problem with remove method
+        infoLeft1.remove(); // TODO: remove is working but the R is having all the results
         console.log('remove first one succeed');
     }
-    var infoLeft2 = document.getElementById('detailTable');
+    let infoLeft2 = document.getElementById('detailTable');
     console.log(infoLeft2 != null);
     if (infoLeft2 != null){
         infoLeft2.remove();

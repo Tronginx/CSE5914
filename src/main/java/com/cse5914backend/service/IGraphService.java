@@ -12,5 +12,6 @@ import java.util.List;
 public interface IGraphService {
     List<Thing> getResults(String filePath);
     List<LocalizedObject> getDetails(String filePath);
+    List<Thing> getHistory(String filePath);
 //    List<Record> getHistory();
 }

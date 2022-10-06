@@ -43,4 +43,9 @@ public class Search2 implements ISearch {
     public List<LocalizedObject> getLocalizedObjects() {
         return null;
     }
+
+    @Override
+    public List<Thing> getHistory() {
+        return null;
+    }
 }

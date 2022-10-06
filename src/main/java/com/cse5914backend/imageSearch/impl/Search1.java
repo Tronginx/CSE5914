@@ -18,6 +18,8 @@ public class Search1 implements ISearch {
 
     static private List<Thing> things = new ArrayList<>();
     static private List<LocalizedObject> objects = new ArrayList<>();
+    static private List<Thing> pictureLandmarks = new ArrayList<>();
+    static private List<LocalizedObject> pictureDetails = new ArrayList<>();
 
 //    public static void detectLandmarks() throws IOException {
 //        // TODO(developer): Replace these variables before running the sample.
@@ -27,6 +29,7 @@ public class Search1 implements ISearch {
 
     // Detects landmarks in the specified local image.
     public static void detectLandmarks(String filePath) throws IOException {
+        pictureLandmarks.clear();
         List<AnnotateImageRequest> requests = new ArrayList<>();
         ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
 
@@ -56,6 +59,7 @@ public class Search1 implements ISearch {
                     tmp.setLocations(new ArrayList<>());
                     tmp.setName(annotation.getDescription());
                     tmp.getLocations().add(info.getLatLng().toString());
+                    pictureLandmarks.add(tmp);
                     things.add(tmp);
                     System.out.format("Landmark: %s%n %s%n", annotation.getDescription(), info.getLatLng());
                 }
@@ -71,6 +75,7 @@ public class Search1 implements ISearch {
      * @throws IOException on Input/Output errors.
      */
     public static void detectLocalizedObjects(String filePath) throws IOException {
+        pictureDetails.clear();
         List<AnnotateImageRequest> requests = new ArrayList<>();
 
         ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
@@ -106,6 +111,7 @@ public class Search1 implements ISearch {
                         tmp.getVertex().add(v.getX());
                         tmp.getVertex().add(v.getY());
                     }
+                    pictureDetails.add(tmp);
                     objects.add(tmp);
                     System.out.format("Object name: %s%n", entity.getName());
                     System.out.format("Confidence: %s%n", entity.getScore());
@@ -143,9 +149,12 @@ public class Search1 implements ISearch {
 
     @Override
     public List<Thing> getThings() {
-        return things;
+        return pictureLandmarks;
     }
     public List<LocalizedObject> getLocalizedObjects() {
-        return objects;
+        return pictureDetails;
     }
+
+    @Override
+    public List<Thing> getHistory() { return things; }
 }
