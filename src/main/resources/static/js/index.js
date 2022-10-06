@@ -14,16 +14,12 @@ function readURL(input) {
 function uploadFile() {
     // detect any table left before uploading new one
     let infoLeft1 = document.getElementById('landmarkTable');
-    console.log(infoLeft1 != null);
     if (infoLeft1 != null){
-        infoLeft1.remove(); // TODO: remove is working but the R is having all the results
-        console.log('remove first one succeed');
+        infoLeft1.remove();
     }
     let infoLeft2 = document.getElementById('detailTable');
-    console.log(infoLeft2 != null);
     if (infoLeft2 != null){
         infoLeft2.remove();
-        console.log('remove second one succeed');
     }
 
     //formData里面存储的数据形式，一对key/value组成一条数据，key是唯一的，一个key可能对应多个value
@@ -69,18 +65,20 @@ function uploadFile() {
                     loadImg.onload = function(){
                         ctx.drawImage(img, 0, 0, img.width, img.height);
                         ctx.strokeStyle = 'red';
-                        // ctx.lineWidth = 5;
+                        ctx.lineWidth = 1;
+                        ctx.fillStyle = 'red'
+                        ctx.font = 'bold 20px sans-serif';
                         for (let i = 0; i < details.length; i++){
                             let name = details[i]['name'];
-                            console.log('start drawing');
-                            console.log(details[i]['vertex'][0]);
-                            ctx.moveTo(details[i]['vertex'][0]*100, details[i]['vertex'][1]*100);
-                            ctx.lineTo(details[i]['vertex'][2]*100, details[i]['vertex'][3]*100);
-                            ctx.lineTo(details[i]['vertex'][4]*100, details[i]['vertex'][5]*100);
-                            ctx.lineTo(details[i]['vertex'][6]*100, details[i]['vertex'][7]*100);
-                            ctx.fillText(name, details[i]['vertex'][0]*100, details[i]['vertex'][1]*100);
+                            // console.log('start drawing');
+                            ctx.moveTo(details[i]['vertex'][0]*canvas.width, details[i]['vertex'][1]*canvas.height);
+                            ctx.lineTo(details[i]['vertex'][2]*canvas.width, details[i]['vertex'][3]*canvas.height);
+                            ctx.lineTo(details[i]['vertex'][4]*canvas.width, details[i]['vertex'][5]*canvas.height);
+                            ctx.lineTo(details[i]['vertex'][6]*canvas.width, details[i]['vertex'][7]*canvas.height);
+                            ctx.lineTo(details[i]['vertex'][0]*canvas.width, details[i]['vertex'][1]*canvas.height);
+                            ctx.fillText(name, details[i]['vertex'][0]*canvas.width*0.8, details[i]['vertex'][1]*canvas.height);
                             ctx.stroke();
-                            console.log('finish drawing');
+                            // console.log('finish drawing');
                         }
                     }
 
