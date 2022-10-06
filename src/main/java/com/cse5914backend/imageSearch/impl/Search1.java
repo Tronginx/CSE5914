@@ -156,5 +156,5 @@ public class Search1 implements ISearch {
     }
 
     @Override
-    public List<Thing> getHistory() { return things; }
+    public List<Thing> getHistory() { return pictureLandmarks; }
 }
