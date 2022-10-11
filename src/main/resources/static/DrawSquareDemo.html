@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <canvas id="myCanvas" width="1000" height="1000" style="border:1px solid #d3d3d3;">
+    Your browser does not support the HTML5 canvas tag.</canvas>
+    <img id="scream" src="/Users/yz/Documents/22fall/CSE5914/university-hall-ohio-state-56a1854f3df78cf7726bb0df.jpeg" alt="The Scream">
+  <script>
+      window.onload = function() {
+          const canvas = document.getElementById('myCanvas');
+          const context = canvas.getContext('2d');
+          const img = document.getElementById('scream');
+          context.drawImage(img, 0, 0);
+          context.beginPath();
+          context.rect(0, 0, 200, 100); // x1, y1, x2, y2
+          context.lineWidth = 7;
+          context.strokeStyle = 'black';
+          context.stroke();
+      }
+  </script>
+</head>
+<body>
+
+</body>
+</html>
