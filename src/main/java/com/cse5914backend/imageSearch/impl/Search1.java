@@ -22,6 +22,7 @@ public class Search1 implements ISearch {
 
     // Detects landmarks in the specified local image.
     public static void detectLandmarks(String filePath) throws IOException {
+        System.out.println("detectLandMarks");
         List<AnnotateImageRequest> requests = new ArrayList<>();
         ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
 
@@ -72,7 +73,7 @@ public class Search1 implements ISearch {
     @Override
     public List<Thing> getThings() {
         List<Thing> res = things;
-        things = new ArrayList<>();
+
         return res;
     }
 }

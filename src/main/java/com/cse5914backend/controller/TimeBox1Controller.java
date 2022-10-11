@@ -69,6 +69,7 @@ public class TimeBox1Controller {
             e.printStackTrace();
         }
         List<Thing> searchResult = iGraphService.getResults(newPath);
+        System.out.println(searchResult.size());
         // store history to IDataSearch
         //TODO: maybe need a try catch?
         dataService.sendHistory(searchResult, newPath);
