@@ -17,6 +17,8 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -115,6 +117,30 @@ public class DataSearch1 implements IDataSearch {
             e.getLocalizedMessage();
         }
         res = getSC(response);
+        try {
+            closeConnection();
+        }catch (java.io.IOException x)
+        {
+            x.getLocalizedMessage();
+        }
+        return res;
+    }
+
+    @Override
+    public List<Record> searchByName(String key, String value) {
+        List<Record> res = new ArrayList<>();
+        makeConnection();
+        SearchRequest searchRequest = new SearchRequest(INDEX);
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+        sourceBuilder.query(QueryBuilders.matchQuery(key, value));
+        searchRequest.source(sourceBuilder);
+        SearchResponse searchResponse = null;
+        try {
+            searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        res = getSC(searchResponse);
         try {
             closeConnection();
         }catch (java.io.IOException x)

@@ -1,6 +1,7 @@
 package com.cse5914backend.elasticSearch.impl;
 import com.cse5914backend.domain.Record;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.index.query.QueryBuilder;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,13 +22,17 @@ public class test {
 //
 //        es.sendHistory(r1);
 
-        List<Record> m =es.getSearchHistory();
-        for (Record t:m
-             ) {
-            es.deleteRecordById(t.getId());
-        }
-        List<Record> me =es.getSearchHistory();
-     System.out.println(me.size());
+        //List<Record> m =es.getSearchHistory();
+        //QueryBuilder m = es.matchQuery();
+
+
+        List<Record> m =es.searchByName("location","Trocadéro Gardens");
+//        for (Record t:m
+//             ) {
+//            es.deleteRecordById(t.getId());
+//        }
+//        List<Record> me =es.getSearchHistory();
+     System.out.println(m);
     }
 
 }
