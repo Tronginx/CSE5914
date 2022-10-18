@@ -20,6 +20,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.WildcardQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 
@@ -125,6 +126,39 @@ public class DataSearch1 implements IDataSearch {
         }
         return res;
     }
+    public List<Record> FuzzySearch(String key, String value) {
+        List<Record> res = new ArrayList<>();
+        makeConnection();
+        // 支持通配符查询，*表示任意字符，?表示任意单个字符
+            WildcardQueryBuilder wildcardQuery = QueryBuilders.wildcardQuery(key, value);
+
+            SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+            sourceBuilder.query(wildcardQuery);
+
+            SearchRequest request = new SearchRequest(INDEX);
+            request.source(sourceBuilder);
+            SearchResponse search = null;
+            try {
+                 search = restHighLevelClient.search(request, RequestOptions.DEFAULT);
+            }
+            catch (IOException e)
+            {
+                throw new RuntimeException(e);
+            }
+
+            System.out.println("-------------");
+            System.out.println(search);
+        res = getSC(search);
+        try {
+            closeConnection();
+        }catch (java.io.IOException x)
+        {
+            x.getLocalizedMessage();
+        }
+        return res;
+
+    }
+
 
     @Override
     public List<Record> searchByName(String key, String value) {

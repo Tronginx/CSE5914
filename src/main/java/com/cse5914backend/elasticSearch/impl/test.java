@@ -26,7 +26,8 @@ public class test {
         //QueryBuilder m = es.matchQuery();
 
 
-        List<Record> m =es.searchByName("location","Trocadéro Gardens");
+        List<Record> m =es.FuzzySearch("location","garden*");
+        //List<Record> m =es.searchByName("location","Eiffel Tower");
 //        for (Record t:m
 //             ) {
 //            es.deleteRecordById(t.getId());

@@ -31,4 +31,13 @@ public interface IDataSearch {
      * @return list of all matched Record
      */
     List<Record> searchByName(String key, String value);
+
+
+    /**
+     *
+     * @param key search key
+     * @param value search value
+     * @return list of all matched Record
+     */
+    List<Record> FuzzySearch(String key, String value) ;
 }
