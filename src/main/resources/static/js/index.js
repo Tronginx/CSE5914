@@ -2,7 +2,7 @@ function initMap() {
     const myLatlng = { lat: 39.9833, lng: -82.9833 };
 
     const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 4,
+        zoom: 10,
         center: myLatlng,
     });
 }
@@ -62,15 +62,28 @@ function uploadFile() {
                 details = result['data'][1];
                 buildLandMarkTable(landmarks);
                 buildDetailTable(details);
-                newMap(landmarks[0]['latitude'], landmarks[0]['longitude']); //TODO: change later into average form
+                newMap(landmarks); //TODO: change later into average form
                 let img = document.getElementById("display-img");
                 detailGraph(img, details);
 
-                function newMap(latitude, longitude) {
+                function newMap(landmarks) {
+                    let latitude = 39.9833;
+                    let longitude = -82.9833;
+                    let sumLatitude = 0;
+                    let sumLongitude = 0;
+                    let size = landmarks.length
+                    if (size != 0){
+                        for (let i = 0; i < size; i++){
+                            sumLatitude += landmarks[i]['latitude'];
+                            sumLongitude += landmarks[i]['longitude'];
+                        }
+                        latitude = sumLatitude / size;
+                        longitude = sumLongitude / size;
+                    }
                     const myLatlng = { lat: latitude, lng: longitude};
 
                     const map = new google.maps.Map(document.getElementById("map"), {
-                        zoom: 4,
+                        zoom: 12,
                         center: myLatlng,
                     });
                 }
