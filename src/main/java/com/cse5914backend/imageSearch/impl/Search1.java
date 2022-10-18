@@ -59,6 +59,10 @@ public class Search1 implements ISearch {
                     tmp.setLocations(new ArrayList<>());
                     tmp.setName(annotation.getDescription());
                     tmp.getLocations().add(info.getLatLng().toString());
+                    double lat = info.getLatLng().getLatitude();
+                    double lng = info.getLatLng().getLongitude();
+                    tmp.setLatitude(lat);
+                    tmp.setLongitude(lng);
                     pictureLandmarks.add(tmp);
                     things.add(tmp);
                     System.out.format("Landmark: %s%n %s%n", annotation.getDescription(), info.getLatLng());

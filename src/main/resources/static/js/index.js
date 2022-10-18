@@ -1,3 +1,14 @@
+function initMap() {
+    const myLatlng = { lat: 39.9833, lng: -82.9833 };
+
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 4,
+        center: myLatlng,
+    });
+}
+
+
+
 function readURL(input) {
     console.log("reached here");
     if (input.files && input.files[0]) {
@@ -96,13 +107,14 @@ function uploadFile() {
                     infoTable.style.width = '100%';
                     infoTable.style.border = '1px solid black';
 
-                    let headings = `<tr><th>Check</th><th>Name</th><th>Location</th></tr>`
+                    let headings = `<tr><th>Check</th><th>Name</th><th>Latitude</th><th>Longitude</th></tr>`
                     infoHead.innerHTML += headings;
 
                     for (let i = 0; i < data.length; i++){
                         let row = `<tr><td><input type='checkbox'></td>
                                        <td>${data[i]['name']}</td>
-                                       <td>${data[i]['locations']}</td></tr>`
+                                       <td>${data[i]['latitude']}</td>
+                                       <td>${data[i]['longitude']}</td></tr>`
                         infoBody.innerHTML += row
                     }
                 }

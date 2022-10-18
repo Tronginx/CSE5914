@@ -63,24 +63,12 @@
         <div class="textRow">Location Map</div>
     </div>
     <p>
-    <button id="map" onclick="initMap()">Get Map</button>
-    <script>
-        function initMap() {
-            var test = {lat: 7, lng: 20};
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 4,
-                center: test
-            });
-            var marker = new google.maps.Marker({
-                position: test,
-                map: map
-            });
-        }
-    </script>
-    <script async defer
-            src=
-                    "https://maps.googleapis.com/maps/api/js?key=AIzaSyCXj3VwBpYdqG7ILIPIfBDr6KFa1znNx1M&callback=initMap">
-    </script>
+        <button id="map" onclick="initMap()">Get Map</button>
+        <script
+                src=
+                        "https://maps.googleapis.com/maps/api/js?key=AIzaSyCXj3VwBpYdqG7ILIPIfBDr6KFa1znNx1M&callback=initMap"
+                defer
+        ></script>
     </p>
 
 </div>

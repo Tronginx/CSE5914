@@ -13,6 +13,7 @@ public class Thing {
     //rectangle coordination
     // x, y
     List<String> locations; //list.get(0) is longitude, (1)is latitude
+    double latitude, longitude;
     int x1, y1;
     int x2, y2;
     int x3, y3;
