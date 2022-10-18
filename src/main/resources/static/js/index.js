@@ -62,8 +62,18 @@ function uploadFile() {
                 details = result['data'][1];
                 buildLandMarkTable(landmarks);
                 buildDetailTable(details);
+                newMap(landmarks[0]['latitude'], landmarks[0]['longitude']); //TODO: change later into average form
                 let img = document.getElementById("display-img");
                 detailGraph(img, details);
+
+                function newMap(latitude, longitude) {
+                    const myLatlng = { lat: latitude, lng: longitude};
+
+                    const map = new google.maps.Map(document.getElementById("map"), {
+                        zoom: 4,
+                        center: myLatlng,
+                    });
+                }
 
                 // TODO: draw blocks on the picture
                 function detailGraph(img, details){
