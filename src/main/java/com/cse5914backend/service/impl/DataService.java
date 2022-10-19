@@ -30,4 +30,9 @@ public class DataService implements IDataService {
     public List<Record> getSearchHistory() {
         return iDataSearch.getSearchHistory();
     }
+
+    @Override
+    public List<Record> searchByName(String key, String value){
+        return iDataSearch.searchByName(key, value);
+    }
 }

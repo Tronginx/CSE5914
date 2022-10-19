@@ -8,4 +8,5 @@ import java.util.List;
 public interface IDataService {
     boolean sendHistory(List<Thing> records, String filePath);
     List<Record> getSearchHistory();
+    List<Record> searchByName(String key, String value);
 }
