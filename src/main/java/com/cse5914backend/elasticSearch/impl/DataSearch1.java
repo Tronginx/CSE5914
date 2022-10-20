@@ -110,6 +110,9 @@ public class DataSearch1 implements IDataSearch {
         SearchRequest searchRequest = new SearchRequest(INDEX);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+        //try
+        searchSourceBuilder.size(10000);
+
         final SearchRequest source = searchRequest.source(searchSourceBuilder);
         SearchResponse response = null;
         try {
@@ -126,6 +129,7 @@ public class DataSearch1 implements IDataSearch {
         }
         return res;
     }
+    @Override
     public List<Record> FuzzySearch(String key, String value) {
         List<Record> res = new ArrayList<>();
         makeConnection();
