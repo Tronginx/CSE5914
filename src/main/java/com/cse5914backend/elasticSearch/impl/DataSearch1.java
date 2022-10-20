@@ -20,6 +20,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.WildcardQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 
@@ -126,22 +127,30 @@ public class DataSearch1 implements IDataSearch {
         }
         return res;
     }
-
     @Override
     public List<Record> searchByName(String key, String value) {
         List<Record> res = new ArrayList<>();
         makeConnection();
-        SearchRequest searchRequest = new SearchRequest(INDEX);
+        // 支持通配符查询，*表示任意字符，?表示任意单个字符
+        WildcardQueryBuilder wildcardQuery = QueryBuilders.wildcardQuery(key, value);
+
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
-        sourceBuilder.query(QueryBuilders.matchQuery(key, value));
-        searchRequest.source(sourceBuilder);
-        SearchResponse searchResponse = null;
+        sourceBuilder.query(wildcardQuery);
+
+        SearchRequest request = new SearchRequest(INDEX);
+        request.source(sourceBuilder);
+        SearchResponse search = null;
         try {
-            searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        } catch (IOException e) {
+            search = restHighLevelClient.search(request, RequestOptions.DEFAULT);
+        }
+        catch (IOException e)
+        {
             throw new RuntimeException(e);
         }
-        res = getSC(searchResponse);
+
+        System.out.println("-------------");
+        System.out.println(search);
+        res = getSC(search);
         try {
             closeConnection();
         }catch (java.io.IOException x)
@@ -150,6 +159,7 @@ public class DataSearch1 implements IDataSearch {
         }
         return res;
     }
+
 
     private List<Record> getSC(SearchResponse sr) {
         List<Record> m = new ArrayList<>();
