@@ -98,3 +98,37 @@ function getHistory() {
         historyTable.appendChild(tbody);
     }
 }
+
+function searchHistory() {
+    let searchResult = []
+    let locationName = document.getElementById('locationName').value
+    $.ajax({
+        method: 'GET',
+        url: '/searchHistory/location/' + locationName,
+        success: function (response) {
+            if (response.flag) {
+                searchResult = response.data
+                buildTable(searchResult)
+                console.log(searchResult)
+            } else {
+                let searchTable = document.getElementById('searchTable')
+                let tbody = document.getElementById('searchTbody');
+                tbody.innerHTML = "<tr><td>No Data Found</td></tr>";
+                searchTable.appendChild(tbody);
+            }
+        }
+    })
+
+    function buildTable(data) {
+        let searchTable = document.getElementById('searchTable')
+        let tbody = document.getElementById('searchTbody');
+        tbody.innerHTML = "";
+        for (let i = 0; i < data.length; i++) {
+            let row = `<tr>
+							<td>${data[i].location}</td>
+					  </tr>`
+            tbody.innerHTML += row
+        }
+        searchTable.appendChild(tbody);
+    }
+}
