@@ -57,6 +57,35 @@
     </p>
 </div>
 </p>
+
+<p>
+  <!--create search history table-->
+<div class="card" id="searchHistory">
+  <div class="chip">
+    <div class="textRow">Search History</div>
+  </div>
+  <br></br>
+  <div>
+      <label for="locationName">Location Name:</label><br>
+      <input type="text" id="locationName" name="locationName" value=""><br>
+  </div>
+  <br></br>
+  <div>
+    <button id="search" onclick="searchHistory()">Check Search History</button>
+  </div>
+  <br></br>
+  <table id="searchTable">
+    <thead>
+    <tr>
+      <th>History Data</th>
+    </tr>
+    </thead>
+    <tbody id="searchTbody">
+    </tbody>
+  </table>
+</div>
+</p>
+
 <p>
 <div class="card" id="MapImage">
     <div class="chip">
