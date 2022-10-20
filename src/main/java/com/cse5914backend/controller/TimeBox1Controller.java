@@ -68,6 +68,14 @@ public class TimeBox1Controller {
         List<Thing> searchResult = iGraphService.getResults(newPath);
         // store history to IDataSearch
         //TODO: maybe need a try catch?
+        if(searchResult==null || searchResult.size()==0){
+            return new R(false);
+        }
+
+        //only need one result
+        while(searchResult.size()>1){
+            searchResult.remove(searchResult.size()-1);
+        }
         dataService.sendHistory(searchResult, newPath);
         return new R(true, searchResult);
     }
