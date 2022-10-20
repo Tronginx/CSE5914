@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Search2 implements ISearch {
     @Override
-    public boolean sendImage1(String path) {
+    public boolean sendImage(String path) {
         return true;
     }
     public boolean sendImage2(String path) {
@@ -44,8 +44,4 @@ public class Search2 implements ISearch {
         return null;
     }
 
-    @Override
-    public List<Thing> getHistory() {
-        return null;
-    }
 }

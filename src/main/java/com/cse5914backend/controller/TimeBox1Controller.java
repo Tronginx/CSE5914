@@ -1,6 +1,7 @@
 package com.cse5914backend.controller;
 
 import com.cse5914backend.controller.utils.R;
+import com.cse5914backend.domain.LocalizedObject;
 import com.cse5914backend.domain.Record;
 import com.cse5914backend.domain.Thing;
 import com.cse5914backend.elasticSearch.IDataSearch;
@@ -67,14 +68,13 @@ public class TimeBox1Controller {
         }
         List<Thing> searchResult = iGraphService.getResults(newPath);
         List<LocalizedObject> detailResult = iGraphService.getDetails(newPath);
-        List<Thing> history = iGraphService.getHistory(newPath);
         List<Object> result = new ArrayList<Object>();
         result.add(searchResult);
         result.add(detailResult);
         // store history to IDataSearch
         //TODO: maybe need a try catch?
         if(searchResult==null || searchResult.size()==0){
-            return new R(false);
+            return new R(false, result);
         }
 
         //only need one result
@@ -82,8 +82,6 @@ public class TimeBox1Controller {
             searchResult.remove(searchResult.size()-1);
         }
         dataService.sendHistory(searchResult, newPath);
-        return new R(true, searchResult);
-        dataService.sendHistory(history, newPath);
         return new R(true, result);
     }
 

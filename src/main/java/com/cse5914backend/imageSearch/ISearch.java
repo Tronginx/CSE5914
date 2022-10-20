@@ -1,5 +1,6 @@
 package com.cse5914backend.imageSearch;
 
+import com.cse5914backend.domain.LocalizedObject;
 import com.cse5914backend.domain.Thing;
 
 import java.util.List;
@@ -19,6 +20,5 @@ public interface ISearch {
      */
     List<Thing> getThings();
     List<LocalizedObject> getLocalizedObjects();
-    List<Thing> getHistory();
 
 }

@@ -18,9 +18,10 @@ import java.util.List;
 @Component("GraphService")
 public class GraphService implements IGraphService {
     ISearch iSearch=new Search1();
+    boolean readFile;
     @Override
     public List<Thing> getResults(String filePath) {
-        boolean readFile = iSearch.sendImage1(filePath);
+        readFile = iSearch.sendImage(filePath);
         if(!readFile) {
             System.out.println("Failed to read file.");
             return null;
@@ -30,7 +31,6 @@ public class GraphService implements IGraphService {
 
     @Override
     public List<LocalizedObject> getDetails(String filePath) {
-        boolean readFile = iSearch.sendImage2(filePath);
         if(!readFile) {
             System.out.println("Failed to read file.");
             return null;
@@ -38,10 +38,7 @@ public class GraphService implements IGraphService {
         return iSearch.getLocalizedObjects();
     }
 
-    @Override
-    public List<Thing> getHistory(String filePath) {
-        return iSearch.getHistory();
-    }
+
 
 
 //    @Override
