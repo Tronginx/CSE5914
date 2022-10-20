@@ -109,6 +109,7 @@ public class DataSearch1 implements IDataSearch {
         SearchRequest searchRequest = new SearchRequest(INDEX);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+        searchSourceBuilder.size(10000);
         final SearchRequest source = searchRequest.source(searchSourceBuilder);
         SearchResponse response = null;
         try {
