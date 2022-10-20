@@ -26,7 +26,7 @@ public class test {
         //QueryBuilder m = es.matchQuery();
 
 
-        List<Record> m =es.searchByName("location","Trocadéro Gardens");
+        List<Record> m =es.searchByName("location","gardens*");
 //        for (Record t:m
 //             ) {
 //            es.deleteRecordById(t.getId());
@@ -38,7 +38,7 @@ public class test {
 //            es.deleteRecordById(m.get(a).getId());
 //        }
 //        m=es.getSearchHistory();
-//        System.out.println(m);
+        System.out.println(m);
 
     }
 
