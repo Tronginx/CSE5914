@@ -186,3 +186,8 @@ input#input {
 	align-items: center;
 	margin: 1%;
 }
+
+button#map {
+    height: 400px;
+    width: 600px;
+}

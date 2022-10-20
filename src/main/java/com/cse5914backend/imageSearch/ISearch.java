@@ -18,5 +18,7 @@ public interface ISearch {
      * @return
      */
     List<Thing> getThings();
+    List<LocalizedObject> getLocalizedObjects();
+    List<Thing> getHistory();
 
 }

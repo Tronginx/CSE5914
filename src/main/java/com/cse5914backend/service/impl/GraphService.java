@@ -20,13 +20,29 @@ public class GraphService implements IGraphService {
     ISearch iSearch=new Search1();
     @Override
     public List<Thing> getResults(String filePath) {
-        boolean readFile = iSearch.sendImage(filePath);
+        boolean readFile = iSearch.sendImage1(filePath);
         if(!readFile) {
             System.out.println("Failed to read file.");
             return null;
         }
         return iSearch.getThings();
     }
+
+    @Override
+    public List<LocalizedObject> getDetails(String filePath) {
+        boolean readFile = iSearch.sendImage2(filePath);
+        if(!readFile) {
+            System.out.println("Failed to read file.");
+            return null;
+        }
+        return iSearch.getLocalizedObjects();
+    }
+
+    @Override
+    public List<Thing> getHistory(String filePath) {
+        return iSearch.getHistory();
+    }
+
 
 //    @Override
 //    public List<Record> getHistory() {

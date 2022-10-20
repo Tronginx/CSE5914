@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -58,7 +59,6 @@ public class TimeBox1Controller {
             filepath.getParentFile().mkdirs();
         }
         String newPath = path + File.separator + newImgName;
-        System.out.println("---------"+newPath);
         try {
             // 写入文件
             file.transferTo(new File(newPath));
@@ -66,6 +66,11 @@ public class TimeBox1Controller {
             e.printStackTrace();
         }
         List<Thing> searchResult = iGraphService.getResults(newPath);
+        List<LocalizedObject> detailResult = iGraphService.getDetails(newPath);
+        List<Thing> history = iGraphService.getHistory(newPath);
+        List<Object> result = new ArrayList<Object>();
+        result.add(searchResult);
+        result.add(detailResult);
         // store history to IDataSearch
         //TODO: maybe need a try catch?
         if(searchResult==null || searchResult.size()==0){
@@ -78,6 +83,8 @@ public class TimeBox1Controller {
         }
         dataService.sendHistory(searchResult, newPath);
         return new R(true, searchResult);
+        dataService.sendHistory(history, newPath);
+        return new R(true, result);
     }
 
     // return search history

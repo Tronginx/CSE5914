@@ -1,18 +1,25 @@
 package com.cse5914backend.imageSearch.impl;
 
+import com.cse5914backend.domain.LocalizedObject;
 import com.cse5914backend.domain.Thing;
 import com.cse5914backend.imageSearch.ISearch;
 import com.google.cloud.vision.v1.*;
 import com.google.protobuf.ByteString;
+import com.google.protobuf.MapEntry;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Search1 implements ISearch {
 
     static private List<Thing> things = new ArrayList<>();
+    static private List<LocalizedObject> objects = new ArrayList<>();
+    static private List<Thing> pictureLandmarks = new ArrayList<>();
+    static private List<LocalizedObject> pictureDetails = new ArrayList<>();
 
 //    public static void detectLandmarks() throws IOException {
 //        // TODO(developer): Replace these variables before running the sample.
@@ -22,6 +29,7 @@ public class Search1 implements ISearch {
 
     // Detects landmarks in the specified local image.
     public static void detectLandmarks(String filePath) throws IOException {
+        pictureLandmarks.clear();
         List<AnnotateImageRequest> requests = new ArrayList<>();
         ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
 
@@ -51,6 +59,11 @@ public class Search1 implements ISearch {
                     tmp.setLocations(new ArrayList<>());
                     tmp.setName(annotation.getDescription());
                     tmp.getLocations().add(info.getLatLng().toString());
+                    double lat = info.getLatLng().getLatitude();
+                    double lng = info.getLatLng().getLongitude();
+                    tmp.setLatitude(lat);
+                    tmp.setLongitude(lng);
+                    pictureLandmarks.add(tmp);
                     things.add(tmp);
                     System.out.format("Landmark: %s%n %s%n", annotation.getDescription(), info.getLatLng());
                 }
@@ -59,9 +72,20 @@ public class Search1 implements ISearch {
     }
 
     @Override
-    public boolean sendImage(String path) {
+    public boolean sendImage1(String path) {
         try {
             Search1.detectLandmarks(path);
+            return true;
+        } catch (IOException e) {
+            System.out.println("ERROR:" + e);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean sendImage2(String path) {
+        try {
+            Search1.detectLocalizedObjects(path);
             return true;
         } catch (IOException e) {
             System.out.println("ERROR:" + e);
@@ -74,5 +98,12 @@ public class Search1 implements ISearch {
         List<Thing> res = things;
         things = new ArrayList<>();
         return res;
+        return pictureLandmarks;
     }
+    public List<LocalizedObject> getLocalizedObjects() {
+        return pictureDetails;
+    }
+
+    @Override
+    public List<Thing> getHistory() { return pictureLandmarks; }
 }
