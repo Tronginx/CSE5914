@@ -106,16 +106,9 @@ function searchHistory() {
         method: 'GET',
         url: '/searchHistory/location/' + locationName,
         success: function (response) {
-            if (response.flag) {
-                searchResult = response.data
-                buildTable(searchResult)
-                console.log(searchResult)
-            } else {
-                let searchTable = document.getElementById('searchTable')
-                let tbody = document.getElementById('searchTbody');
-                tbody.innerHTML = "<tr><td>No Data Found</td></tr>";
-                searchTable.appendChild(tbody);
-            }
+            searchResult = response.data
+            buildTable(searchResult)
+            console.log(searchResult)
         }
     })
 
@@ -123,11 +116,18 @@ function searchHistory() {
         let searchTable = document.getElementById('searchTable')
         let tbody = document.getElementById('searchTbody');
         tbody.innerHTML = "";
-        for (let i = 0; i < data.length; i++) {
+        if (data.length === 0) {
             let row = `<tr>
-							<td>${data[i].location}</td>
+							<td>No Data Found</td>
 					  </tr>`
             tbody.innerHTML += row
+        } else {
+            for (let i = 0; i < data.length; i++) {
+                let row = `<tr>
+							<td>${data[i].location}</td>
+					  </tr>`
+                tbody.innerHTML += row
+            }
         }
         searchTable.appendChild(tbody);
     }
