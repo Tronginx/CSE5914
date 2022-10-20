@@ -124,7 +124,7 @@ function searchHistory() {
         } else {
             for (let i = 0; i < data.length; i++) {
                 let row = `<tr>
-							<td>${data[i].location}</td>
+							<td>${data[i].latitude}</td>
 					  </tr>`
                 tbody.innerHTML += row
             }
