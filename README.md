@@ -9,8 +9,7 @@ Repo for CSE5914 team project
 - Detect text in graphs
 - Translate texts into English
 
-## Current problems:
-# Test case handle for TimeBox 4
+## Test case handle for TimeBox 4:
 
 |Type | CASE        | Solved? | Responsible | Checked |
 |------|-----------|--------|---------------|--------|
