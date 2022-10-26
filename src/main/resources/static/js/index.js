@@ -161,8 +161,7 @@ function uploadFile() {
                     let headings = `<tr><th>Name</th><th>Vertex</th></tr>`
                     infoHead.innerHTML += headings;
 
-                    let row = `<tr><td>${data[0]['description']}</td>
-                                       <td>${data[0]['vertex']}</td><td>`
+                    let row = `<tr><td>${data[0]['description']}</td><td>`
                     for (let j = 0; j <data[0]['vertex'].length; j++) {
                         row += `[${data[0]['vertex'][j]}, ${data[0]['vertex'][j+1]}] `;
                         j++;

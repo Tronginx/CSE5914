@@ -163,11 +163,9 @@ public class Search1 implements ISearch {
                     Text tmp = new Text();
                     tmp.setDescription(annotation.getDescription());
                     tmp.setVertex(new ArrayList<>());
-                    for (NormalizedVertex v: annotation.getBoundingPoly().getNormalizedVerticesList()){
+                    for (Vertex v: annotation.getBoundingPoly().getVerticesList()){
                         tmp.getVertex().add(v.getX());
                         tmp.getVertex().add(v.getY());
-                        System.out.println(v.getX());
-                        System.out.println(v.getY());
                     }
                     pictureTexts.add(tmp);
                     texts.add(tmp);

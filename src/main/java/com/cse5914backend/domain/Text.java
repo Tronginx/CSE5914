@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public class Text {
     String description;
-    List<Float> vertex;
+    List<Integer> vertex;
 //    int x1, y1;
 //    int x2, y2;
 //    int x3, y3;
