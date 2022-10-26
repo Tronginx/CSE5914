@@ -32,6 +32,10 @@ function uploadFile() {
     if (infoLeft2 != null){
         infoLeft2.remove();
     }
+    let infoLeft3 = document.getElementById('textTable');
+    if (infoLeft3 != null){
+        infoLeft2.remove();
+    }
 
     //formData里面存储的数据形式，一对key/value组成一条数据，key是唯一的，一个key可能对应多个value
     var myform = new FormData();
@@ -61,9 +65,11 @@ function uploadFile() {
                 $("#div_upload").removeClass("show");
                 landmarks = result['data'][0];
                 details = result['data'][1];
+                texts = result['data'][2];
                 buildLandMarkTable(landmarks);
+                buildTextTable(texts);
                 buildDetailTable(details);
-                newMap(landmarks); //TODO: change later into average form
+                newMap(landmarks);
                 let img = document.getElementById("display-img");
                 detailGraph(img, details);
 
@@ -89,7 +95,6 @@ function uploadFile() {
                     });
                 }
 
-                // TODO: draw blocks on the picture
                 function detailGraph(img, details){
                     let canvas = document.querySelector('#detailPicture');
                     let ctx = canvas.getContext('2d');
@@ -131,16 +136,39 @@ function uploadFile() {
                     infoTable.style.width = '100%';
                     infoTable.style.border = '1px solid black';
 
-                    let headings = `<tr><th>Check</th><th>Name</th><th>Latitude</th><th>Longitude</th></tr>`
+                    let headings = `<tr><th>Name</th><th>Latitude</th><th>Longitude</th></tr>`
                     infoHead.innerHTML += headings;
 
                     for (let i = 0; i < data.length; i++){
-                        let row = `<tr><td><input type='checkbox'></td>
-                                       <td>${data[i]['name']}</td>
+                        let row = `<tr><td>${data[i]['name']}</td>
                                        <td>${data[i]['latitude']}</td>
                                        <td>${data[i]['longitude']}</td></tr>`
                         infoBody.innerHTML += row
                     }
+                }
+
+                function buildTextTable(data) {
+                    let infoTable = document.createElement('table');
+                    let infoHead = document.createElement('thead');
+                    let infoBody = document.createElement('tbody');
+                    infoTable.appendChild(infoHead);
+                    infoTable.appendChild(infoBody);
+                    infoTable.setAttribute('id', 'textTable');
+                    document.getElementById('Placeholder3').appendChild(infoTable);
+                    infoTable.style.width = '100%';
+                    infoTable.style.border = '1px solid black';
+
+                    let headings = `<tr><th>Name</th><th>Vertex</th></tr>`
+                    infoHead.innerHTML += headings;
+
+                    let row = `<tr><td>${data[0]['description']}</td>
+                                       <td>${data[0]['vertex']}</td><td>`
+                    for (let j = 0; j <data[0]['vertex'].length; j++) {
+                        row += `[${data[0]['vertex'][j]}, ${data[0]['vertex'][j+1]}] `;
+                        j++;
+                    }
+                    row += '</td></tr>';
+                    infoBody.innerHTML += row;
                 }
 
                 function buildDetailTable(data) {
@@ -154,12 +182,11 @@ function uploadFile() {
                     infoTable.style.width = '100%';
                     infoTable.style.border = '1px solid black';
 
-                    let headings = `<tr><th>Check</th><th>Name</th><th>Confidence</th><th>Vertex</th></tr>`
+                    let headings = `<tr><th>Name</th><th>Confidence</th><th>Vertex</th></tr>`
                     infoHead.innerHTML += headings;
 
                     for (let i = 0; i < data.length; i++){
-                        let row = `<tr><td><input type='checkbox'></td>
-                                       <td>${data[i]['name']}</td>
+                        let row = `<tr><td>${data[i]['name']}</td>
                                        <td>${data[i]['confidence']}</td><td>`
                         for (let j = 0; j <data[i]['vertex'].length; j++) {
                             row += `[${data[i]['vertex'][j]}, ${data[i]['vertex'][j+1]}] `;
@@ -199,7 +226,6 @@ function getHistory() {
         tbody.innerHTML = "";
         for (let i = 0; i < data.length; i++) {
             let row = `<tr>
-                            <td><input type='checkbox'></td>
 							<td>${data[i].location}</td>
 					  </tr>`
             tbody.innerHTML += row

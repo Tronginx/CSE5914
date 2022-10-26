@@ -166,6 +166,8 @@ public class Search1 implements ISearch {
                     for (NormalizedVertex v: annotation.getBoundingPoly().getNormalizedVerticesList()){
                         tmp.getVertex().add(v.getX());
                         tmp.getVertex().add(v.getY());
+                        System.out.println(v.getX());
+                        System.out.println(v.getY());
                     }
                     pictureTexts.add(tmp);
                     texts.add(tmp);
