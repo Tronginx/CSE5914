@@ -66,8 +66,9 @@ function uploadFile() {
                 landmarks = result['data'][0];
                 details = result['data'][1];
                 texts = result['data'][2];
+                translations = result['data'][3];
                 buildLandMarkTable(landmarks);
-                buildTextTable(texts);
+                buildTextTable(texts, translations);
                 buildDetailTable(details);
                 newMap(landmarks);
                 let img = document.getElementById("display-img");
@@ -147,7 +148,7 @@ function uploadFile() {
                     }
                 }
 
-                function buildTextTable(data) {
+                function buildTextTable(data, translateData) {
                     let infoTable = document.createElement('table');
                     let infoHead = document.createElement('thead');
                     let infoBody = document.createElement('tbody');
@@ -161,13 +162,16 @@ function uploadFile() {
                     let headings = `<tr><th>Name</th><th>Translation</th></tr>`
                     infoHead.innerHTML += headings;
 
-                    let row = `<tr><td>${data[0]['description']}</td><td>`
+                    if (data.length > 0) {
+                        let row = `<tr><td>${data[0]['description']}</td><td>${translateData[0]}</td></tr>`
+                        infoBody.innerHTML += row;
+                    }
+
 //                    for (let j = 0; j <data[0]['vertex'].length; j++) {
 //                        row += `[${data[0]['vertex'][j]}, ${data[0]['vertex'][j+1]}] `;
 //                        j++;
 //                    }
-                    row += '</td></tr>';
-                    infoBody.innerHTML += row;
+
                 }
 
                 function buildDetailTable(data) {
