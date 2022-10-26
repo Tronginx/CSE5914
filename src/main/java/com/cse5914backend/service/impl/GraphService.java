@@ -47,6 +47,15 @@ public class GraphService implements IGraphService {
         return iSearch.getTexts();
     }
 
+    @Override
+    public List<String> getTranslations(String filePath) {
+        if(!readFile) {
+            System.out.println("Failed to read file.");
+            return null;
+        }
+        return iSearch.getTranslations();
+    }
+
 
 
 

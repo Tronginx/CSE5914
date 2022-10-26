@@ -158,14 +158,14 @@ function uploadFile() {
                     infoTable.style.width = '100%';
                     infoTable.style.border = '1px solid black';
 
-                    let headings = `<tr><th>Name</th><th>Vertex</th></tr>`
+                    let headings = `<tr><th>Name</th><th>Translation</th></tr>`
                     infoHead.innerHTML += headings;
 
                     let row = `<tr><td>${data[0]['description']}</td><td>`
-                    for (let j = 0; j <data[0]['vertex'].length; j++) {
-                        row += `[${data[0]['vertex'][j]}, ${data[0]['vertex'][j+1]}] `;
-                        j++;
-                    }
+//                    for (let j = 0; j <data[0]['vertex'].length; j++) {
+//                        row += `[${data[0]['vertex'][j]}, ${data[0]['vertex'][j+1]}] `;
+//                        j++;
+//                    }
                     row += '</td></tr>';
                     infoBody.innerHTML += row;
                 }

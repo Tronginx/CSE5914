@@ -50,4 +50,9 @@ public class Search2 implements ISearch {
         return null;
     }
 
+    @Override
+    public List<String> getTranslations() {
+        return null;
+    }
+
 }

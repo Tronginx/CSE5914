@@ -22,5 +22,6 @@ public interface ISearch {
     List<Thing> getThings();
     List<LocalizedObject> getLocalizedObjects();
     List<Text> getTexts();
+    List<String> getTranslations();
 
 }

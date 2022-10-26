@@ -14,6 +14,7 @@ public interface IGraphService {
     List<Thing> getResults(String filePath);
     List<LocalizedObject> getDetails(String filePath);
     List<Text> getTexts(String filePath);
+    List<String> getTranslations(String filePath);
 //    List<Thing> getHistory(String filePath);
 //    List<Record> getHistory();
 }
