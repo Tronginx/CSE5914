@@ -34,7 +34,7 @@ function uploadFile() {
     }
     let infoLeft3 = document.getElementById('textTable');
     if (infoLeft3 != null){
-        infoLeft2.remove();
+        infoLeft3.remove();
     }
 
     //formData里面存储的数据形式，一对key/value组成一条数据，key是唯一的，一个key可能对应多个value
@@ -163,7 +163,10 @@ function uploadFile() {
                     infoHead.innerHTML += headings;
 
                     if (data.length > 0) {
-                        let row = `<tr><td>${data[0]['description']}</td><td>${translateData[0]}</td></tr>`
+                        let row = `<tr><td>${data[0]['description']}</td>`
+                        if (translateData.length > 0) {
+                            row += `<td>${translateData[0]}</td></tr>`
+                        }
                         infoBody.innerHTML += row;
                     }
 
