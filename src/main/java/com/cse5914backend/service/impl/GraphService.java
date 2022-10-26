@@ -38,6 +38,15 @@ public class GraphService implements IGraphService {
         return iSearch.getLocalizedObjects();
     }
 
+    @Override
+    public List<Text> getTexts(String filePath) {
+        if(!readFile) {
+            System.out.println("Failed to read file.");
+            return null;
+        }
+        return iSearch.getTexts();
+    }
+
 
 
 

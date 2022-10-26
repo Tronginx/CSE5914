@@ -3,6 +3,7 @@ package com.cse5914backend.controller;
 import com.cse5914backend.controller.utils.R;
 import com.cse5914backend.domain.LocalizedObject;
 import com.cse5914backend.domain.Record;
+import com.cse5914backend.domain.Text;
 import com.cse5914backend.domain.Thing;
 import com.cse5914backend.elasticSearch.IDataSearch;
 import com.cse5914backend.elasticSearch.impl.DataSearch1;
@@ -68,9 +69,11 @@ public class TimeBox1Controller {
         }
         List<Thing> searchResult = iGraphService.getResults(newPath);
         List<LocalizedObject> detailResult = iGraphService.getDetails(newPath);
+        List<Text> detailText = iGraphService.getTexts(newPath);
         List<Object> result = new ArrayList<Object>();
         result.add(searchResult);
         result.add(detailResult);
+        result.add(detailText);
         // store history to IDataSearch
         //TODO: maybe need a try catch?
         if(searchResult==null || searchResult.size()==0){

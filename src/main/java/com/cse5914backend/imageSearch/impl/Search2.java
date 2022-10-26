@@ -1,6 +1,7 @@
 package com.cse5914backend.imageSearch.impl;
 
 import com.cse5914backend.domain.LocalizedObject;
+import com.cse5914backend.domain.Text;
 import com.cse5914backend.domain.Thing;
 import com.cse5914backend.imageSearch.ISearch;
 
@@ -41,6 +42,11 @@ public class Search2 implements ISearch {
 
     @Override
     public List<LocalizedObject> getLocalizedObjects() {
+        return null;
+    }
+
+    @Override
+    public List<Text> getTexts(){
         return null;
     }
 
