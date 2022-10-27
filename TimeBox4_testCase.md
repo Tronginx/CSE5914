@@ -6,8 +6,8 @@
 | input | upload button multiple clicks | | Yan |
 | input | upload file type restriction | | Tron |
 | input | upload file size | | Tron |
-| input | map button issue(jump back to columbus) | | Yang |
-| ui | checkbox removal | | Cai |
-| input | map can't move | | Yang |
+| input | map button issue(jump back to columbus) | x | Yang |
+| ui | checkbox removal | x | Cai |
+| input | map can't move | x | Yang |
 | input+ouput| same image search: history| | Dan+Barry|
 | database | longitude and latitude separation | | Barry |
