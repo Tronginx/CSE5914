@@ -171,7 +171,7 @@ function uploadFile() {
                 }
             },
             error: function (data) {
-                alert("Please upload image only(.png/.jpeg/.webp)");
+                alert("Please upload image only under 50MB(.png/.jpeg/.webp).");
             }
         });
     }
