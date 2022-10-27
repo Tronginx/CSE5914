@@ -69,13 +69,19 @@ public class DataSearch1 implements IDataSearch {
     @Override
     public boolean sendHistory(Record record) {
 
-            makeConnection();
+
         record.setId(UUID.randomUUID().toString());
-        System.out.println("------"+record.getId());
+        //System.out.println("------"+record.getId());
         String latitude = record.getLatitude();
         String longitude = record.getLongitude();
         String path = record.getFilePath();
         String location = record.getLocation();
+        System.out.println("search name is "+location+"count time is "+searchByName("location",location).size());
+        if(searchByNameAct("location",location).size()>=1)
+        {
+            return false;
+        }
+        makeConnection();
         Map<String, Object> dataMap = new HashMap<String, Object>();
         dataMap.put("filePath", path);
         dataMap.put("location", location);
@@ -131,6 +137,9 @@ public class DataSearch1 implements IDataSearch {
     public List<Record> searchByName(String key, String value) {
         value = value.toLowerCase();
         List<Record> res = new ArrayList<>();
+
+
+
         makeConnection();
         // 支持通配符查询，*表示任意字符，?表示任意单个字符
         WildcardQueryBuilder wildcardQuery = QueryBuilders.wildcardQuery(key, value);
@@ -148,9 +157,43 @@ public class DataSearch1 implements IDataSearch {
         {
             throw new RuntimeException(e);
         }
+        res = getSC(search);
 
-        System.out.println("-------------");
-        System.out.println(search);
+        try {
+            closeConnection();
+        }catch (java.io.IOException x)
+        {
+            x.getLocalizedMessage();
+        }
+        if(res.size()==0)
+        {
+            res = searchByNameAct(key, value);
+        }
+        return res;
+    }
+
+
+    public List<Record> searchByNameAct(String key, String value) {
+        value = value.toLowerCase();
+        List<Record> res = new ArrayList<>();
+        makeConnection();
+        // 支持通配符查询，*表示任意字符，?表示任意单个字符
+        MatchQueryBuilder Query = QueryBuilders.matchQuery(key, value);
+
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+        sourceBuilder.query(Query);
+
+        SearchRequest request = new SearchRequest(INDEX);
+        request.source(sourceBuilder);
+        SearchResponse search = null;
+        try {
+            search = restHighLevelClient.search(request, RequestOptions.DEFAULT);
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+
         res = getSC(search);
         try {
             closeConnection();
@@ -160,7 +203,6 @@ public class DataSearch1 implements IDataSearch {
         }
         return res;
     }
-
 
     private List<Record> getSC(SearchResponse sr) {
         List<Record> m = new ArrayList<>();
