@@ -129,7 +129,7 @@ public class DataSearch1 implements IDataSearch {
     }
     @Override
     public List<Record> searchByName(String key, String value) {
-        key = key.toLowerCase();
+        value = value.toLowerCase();
         List<Record> res = new ArrayList<>();
         makeConnection();
         // 支持通配符查询，*表示任意字符，?表示任意单个字符
