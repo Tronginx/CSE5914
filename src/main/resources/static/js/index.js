@@ -171,7 +171,7 @@ function uploadFile() {
                 }
             },
             error: function (data) {
-                alert("系统错误");
+                alert("Please upload image only(.png/.jpeg/.webp)");
             }
         });
     }
