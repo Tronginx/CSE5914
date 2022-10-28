@@ -9,6 +9,7 @@ Repo for CSE5914 team project
 - Detect text in graphs
 - Translate texts into English
 - Detect image labels
+- Best Guesses: Places, Entity, Confidence Score
 
 ## Test case handle for TimeBox 4:
 
@@ -23,6 +24,7 @@ Repo for CSE5914 team project
 | input | map can't move | | Yang | check |
 | input+ouput| same image search: history| | Dan+Barry| |
 | database | longitude and latitude separation | | Barry | |
+| ui | picture input remains after redirecting from the 'Picture links' but can't show the picture| | | | 
 
 
 ## Possible new features:
