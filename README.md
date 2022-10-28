@@ -10,6 +10,7 @@ Repo for CSE5914 team project
 - Translate texts into English
 - Detect image labels
 - Best Guesses: Places, Entity, Confidence Score
+- Location Map detecting rules: Buest guess -> Entity -> Landmarks [Default/No Result: Columbus]
 
 ## Test case handle for TimeBox 4:
 
@@ -34,3 +35,4 @@ Repo for CSE5914 team project
 ## Future testing:
 - Test the 'Detect text in graphs' and 'Translate texts into English' functions
 - Test the 'Detect label' function
+- Test the 'Buest Guess' function
