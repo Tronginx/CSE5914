@@ -8,6 +8,7 @@ Repo for CSE5914 team project
 - Show the google map regarding the detected latitude and longitude.
 - Detect text in graphs
 - Translate texts into English
+- Detect image labels
 
 ## Test case handle for TimeBox 4:
 
