@@ -87,11 +87,11 @@ function uploadFile() {
                 buildDetailTable(details);
                 buildLabelTable(labels);
                 buildResourceTable(resources);
-                newMap(landmarks);
+                newMap(landmarks, resources);
                 let img = document.getElementById("display-img");
                 detailGraph(img, details);
 
-                function newMap(landmarks) {
+                function newMap(landmarks, resources) {
                     let latitude = 39.9833;
                     let longitude = -82.9833;
                     let sumLatitude = 0;
@@ -111,6 +111,21 @@ function uploadFile() {
                         zoom: 12,
                         center: myLatlng,
                     });
+
+                    let geocoder = new google.maps.Geocoder();
+                    let address = '';
+                    if (resources.length > 0){
+                        address = resources[0]['entityDescription'];
+                        console.warn(address);
+                        geocoder.geocode( { 'address': address}, function(results, status) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                map.setCenter(results[0].geometry.location);
+                            } else {
+                                console.warn('Geocode was not successful for the following reason: ' + status);
+                                map.setCenter(myLatlng);
+                            }
+                        });
+                    }
                 }
 
                 function detailGraph(img, details){
