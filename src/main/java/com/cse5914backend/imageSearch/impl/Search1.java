@@ -28,7 +28,7 @@ public class Search1 implements ISearch {
     static private List<LocalizedObject> pictureDetails = new ArrayList<>();
     static private List<Text> texts = new ArrayList<>();
     static private List<Text> pictureTexts = new ArrayList<>();
-    static private String projectId = "cse-5914-grabble";
+    static private String projectId = "magicpart";
     static private String targetLanguage = "en";
     static private List<String> translations = new ArrayList<>();
 
