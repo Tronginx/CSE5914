@@ -1,9 +1,6 @@
 package com.cse5914backend.imageSearch.impl;
 
-import com.cse5914backend.domain.Label;
-import com.cse5914backend.domain.LocalizedObject;
-import com.cse5914backend.domain.Text;
-import com.cse5914backend.domain.Thing;
+import com.cse5914backend.domain.*;
 import com.cse5914backend.imageSearch.ISearch;
 
 import java.util.ArrayList;
@@ -58,6 +55,10 @@ public class Search2 implements ISearch {
     }
     @Override
     public List<Label> getLabels(){
+        return null;
+    }
+    @Override
+    public List<WebResource> getResources(){
         return null;
     }
 

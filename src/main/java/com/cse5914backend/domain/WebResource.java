@@ -6,7 +6,8 @@ import java.util.List;
 
 @Data
 public class WebResource {
-    String name;
-    Float confidence;
-    List<Float> vertex;
+    String entityDescription;
+    Float entityScore;
+    String bestGuessLabel;
+    List<Label> images;
 }

@@ -71,12 +71,14 @@ public class TimeBox1Controller {
         List<Text> detailText = iGraphService.getTexts(newPath);
         List<String> translationText = iGraphService.getTranslations(newPath);
         List<Label> labelText = iGraphService.getLabels(newPath);
+        List<WebResource> resourceResult = iGraphService.getResources(newPath);
         List<Object> result = new ArrayList<Object>();
         result.add(searchResult);
         result.add(detailResult);
         result.add(detailText);
         result.add(translationText);
         result.add(labelText);
+        result.add(resourceResult);
         // store history to IDataSearch
         //TODO: maybe need a try catch?
         if(searchResult==null || searchResult.size()==0){

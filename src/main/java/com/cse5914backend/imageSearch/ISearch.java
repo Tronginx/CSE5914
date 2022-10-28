@@ -1,9 +1,6 @@
 package com.cse5914backend.imageSearch;
 
-import com.cse5914backend.domain.Label;
-import com.cse5914backend.domain.LocalizedObject;
-import com.cse5914backend.domain.Text;
-import com.cse5914backend.domain.Thing;
+import com.cse5914backend.domain.*;
 
 import java.util.List;
 import java.util.Map;
@@ -26,5 +23,6 @@ public interface ISearch {
     List<Text> getTexts();
     List<String> getTranslations();
     List<Label> getLabels();
+    List<WebResource> getResources();
 
 }

@@ -1,9 +1,6 @@
 package com.cse5914backend.imageSearch.impl;
 
-import com.cse5914backend.domain.Label;
-import com.cse5914backend.domain.LocalizedObject;
-import com.cse5914backend.domain.Text;
-import com.cse5914backend.domain.Thing;
+import com.cse5914backend.domain.*;
 import com.cse5914backend.imageSearch.ISearch;
 import com.google.cloud.ServiceOptions;
 import com.google.cloud.vision.v1.*;
@@ -45,6 +42,7 @@ public class Search1 implements ISearch {
     static private String targetLanguage = "en";
     static private List<String> translations = new ArrayList<>();
     static private List<Label> labels = new ArrayList<>();
+    static private List<WebResource> resources = new ArrayList<>();
 
 //    public static void detectLandmarks() throws IOException {
 //        // TODO(developer): Replace these variables before running the sample.
@@ -282,6 +280,7 @@ public class Search1 implements ISearch {
 
     // Finds references to the specified image on the web.
     public static void detectWebDetections(String filePath) throws IOException {
+        resources.clear();
         List<AnnotateImageRequest> requests = new ArrayList<>();
 
         ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
@@ -309,31 +308,69 @@ public class Search1 implements ISearch {
                 // for user input moderation or linking external references.
                 // For a full list of available annotations, see http://g.co/cloud/vision/docs
                 WebDetection annotation = res.getWebDetection();
-                System.out.println("Entity:Id:Score");
-                System.out.println("===============");
+                WebResource tmp = new WebResource();
+                List<WebEntity> webEntities = annotation.getWebEntitiesList();
+                if (webEntities.size() > 0){
+                    tmp.setEntityDescription(webEntities.get(0).getDescription());
+                    tmp.setEntityScore(webEntities.get(0).getScore());
+                }
                 for (WebEntity entity : annotation.getWebEntitiesList()) {
                     System.out.println(
                             entity.getDescription() + " : " + entity.getEntityId() + " : " + entity.getScore());
                 }
+
+                List<WebLabel> webLabels = annotation.getBestGuessLabelsList();
+                if (webLabels.size() > 0){
+                    tmp.setBestGuessLabel(webLabels.get(0).getLabel());
+                }
                 for (WebLabel label : annotation.getBestGuessLabelsList()) {
                     System.out.format("%nBest guess label: %s", label.getLabel());
                 }
-                System.out.println("%nPages with matching images: Score%n==");
-                for (WebPage page : annotation.getPagesWithMatchingImagesList()) {
-                    System.out.println(page.getUrl() + " : " + page.getScore());
-                }
-                System.out.println("%nPages with partially matching images: Score%n==");
-                for (WebImage image : annotation.getPartialMatchingImagesList()) {
-                    System.out.println(image.getUrl() + " : " + image.getScore());
+
+                List<Label> imgs = new ArrayList<>();
+                List<WebImage> webFullyImage = annotation.getFullMatchingImagesList();
+                int fullySize = 3;
+                for (int i = 0; i < Math.min(fullySize, webFullyImage.size()); i++){
+                    WebImage current = webFullyImage.get(i);
+                    Label label = new Label();
+                    label.setDescription(current.getUrl());
+                    label.setScore(current.getScore());
+                    imgs.add(label);
                 }
                 System.out.println("%nPages with fully matching images: Score%n==");
                 for (WebImage image : annotation.getFullMatchingImagesList()) {
                     System.out.println(image.getUrl() + " : " + image.getScore());
                 }
+
+                List<WebImage> webPartialImage = annotation.getPartialMatchingImagesList();
+                int partialSize = 3;
+                for (int i = 0; i < Math.min(partialSize, webPartialImage.size()); i++){
+                    WebImage current = webPartialImage.get(i);
+                    Label label = new Label();
+                    label.setDescription(current.getUrl());
+                    label.setScore(current.getScore());
+                    imgs.add(label);
+                }
+                System.out.println("%nPages with partially matching images: Score%n==");
+                for (WebImage image : annotation.getPartialMatchingImagesList()) {
+                    System.out.println(image.getUrl() + " : " + image.getScore());
+                }
+
+                List<WebImage> webSimilarImage = annotation.getVisuallySimilarImagesList();
+                int visualSize = 3;
+                for (int i = 0; i < Math.min(visualSize, webSimilarImage.size()); i++){
+                    WebImage current = webSimilarImage.get(i);
+                    Label label = new Label();
+                    label.setDescription(current.getUrl());
+                    label.setScore(current.getScore());
+                    imgs.add(label);
+                }
                 System.out.println("%nPages with visually similar images: Score%n==");
                 for (WebImage image : annotation.getVisuallySimilarImagesList()) {
                     System.out.println(image.getUrl() + " : " + image.getScore());
                 }
+                tmp.setImages(imgs);
+                resources.add(tmp);
             }
         }
     }
@@ -349,6 +386,7 @@ public class Search1 implements ISearch {
                 Search1.translateText(projectId, targetLanguage, t.getDescription());
             }
             Search1.detectLabels(path);
+            Search1.detectWebDetections(path);
             return true;
         } catch (IOException e) {
             System.out.println("ERROR:" + e);
@@ -381,6 +419,11 @@ public class Search1 implements ISearch {
     @Override
     public List<Label> getLabels(){
         return labels;
+    }
+
+    @Override
+    public List<WebResource> getResources(){
+        return resources;
     }
 
 

@@ -66,6 +66,15 @@ public class GraphService implements IGraphService {
         return iSearch.getLabels();
     }
 
+    @Override
+    public List<WebResource> getResources(String filePath) {
+        if(!readFile) {
+            System.out.println("Failed to read file.");
+            return null;
+        }
+        return iSearch.getResources();
+    }
+
 
 
 
