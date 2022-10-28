@@ -113,16 +113,26 @@ function uploadFile() {
                     });
 
                     let geocoder = new google.maps.Geocoder();
-                    let address = '';
+                    let address1 = '';
+                    let address2 = '';
                     if (resources.length > 0){
-                        address = resources[0]['entityDescription'];
-                        console.warn(address);
-                        geocoder.geocode( { 'address': address}, function(results, status) {
+                        address1 = resources[0]['bestGuessLabel'];
+                        address2 = resources[0]['entityDescription'];
+                        console.info(address1);
+                        console.info(address2);
+                        geocoder.geocode( { 'address': address1}, function(results, status) {
                             if (status == google.maps.GeocoderStatus.OK) {
                                 map.setCenter(results[0].geometry.location);
                             } else {
-                                console.warn('Geocode was not successful for the following reason: ' + status);
-                                map.setCenter(myLatlng);
+                                console.info('Geocode was not successful for the following reason: ' + status);
+                                geocoder.geocode( { 'address': address2}, function(results, status) {
+                                    if (status == google.maps.GeocoderStatus.OK) {
+                                        map.setCenter(results[0].geometry.location);
+                                    } else {
+                                        console.info('Geocode was not successful for the following reason: ' + status);
+                                        map.setCenter(myLatlng);
+                                    }
+                                });
                             }
                         });
                     }
