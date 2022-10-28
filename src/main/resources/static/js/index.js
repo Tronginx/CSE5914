@@ -293,14 +293,31 @@ function uploadFile() {
                     document.getElementById('Placeholder6').appendChild(infoTable2);
                     infoTable2.style.width = '100%';
                     infoTable2.style.border = '1px solid black';
+                    let row = document.createElement('tr');
+                    let row2 = document.createElement('tr');
 
                     if (data.length != 0){
                         let imgList = data[0]['images'];
                         for (let i = 0; i < imgList.length; i++){
-                            let row = `<tr><td>${imgList[i]['description']}</td></tr>`
-                            infoBody2.innerHTML += row
+                            let cell = document.createElement('td');
+                            let a = document.createElement('a');
+                            let linkText = document.createTextNode('Picture link');
+                            a.appendChild(linkText);
+                            let j = i + 1;
+                            a.title = "Picture link" + j;
+                            a.href = imgList[i]['description']
+                            // let row = `<tr><td>${imgList[i]['description']}</td></tr>`
+                            cell.appendChild(a);
+                            if (i < 5) {
+                                row.appendChild(cell);
+                            } else {
+                                row2.appendChild(cell);
+                            }
+
                         }
                     }
+                    infoBody2.appendChild(row);
+                    infoBody2.appendChild(row2);
 
                 }
             },
