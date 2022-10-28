@@ -1,24 +1,37 @@
 package com.cse5914backend.imageSearch.impl;
 
+import com.cse5914backend.domain.Label;
 import com.cse5914backend.domain.LocalizedObject;
 import com.cse5914backend.domain.Text;
 import com.cse5914backend.domain.Thing;
 import com.cse5914backend.imageSearch.ISearch;
+import com.google.cloud.ServiceOptions;
 import com.google.cloud.vision.v1.*;
 import com.google.protobuf.ByteString;
+import com.google.protobuf.Descriptors;
 import com.google.protobuf.MapEntry;
 import com.google.cloud.translate.v3.LocationName;
 import com.google.cloud.translate.v3.TranslateTextRequest;
 import com.google.cloud.translate.v3.TranslateTextResponse;
 import com.google.cloud.translate.v3.Translation;
 import com.google.cloud.translate.v3.TranslationServiceClient;
+import com.google.cloud.vision.v1.AnnotateImageRequest;
+import com.google.cloud.vision.v1.AnnotateImageResponse;
+import com.google.cloud.vision.v1.BatchAnnotateImagesResponse;
+import com.google.cloud.vision.v1.Feature;
+import com.google.cloud.vision.v1.Feature.Type;
+import com.google.cloud.vision.v1.Image;
+import com.google.cloud.vision.v1.ImageAnnotatorClient;
+import com.google.cloud.vision.v1.WebDetection;
+import com.google.cloud.vision.v1.WebDetection.WebEntity;
+import com.google.cloud.vision.v1.WebDetection.WebImage;
+import com.google.cloud.vision.v1.WebDetection.WebLabel;
+import com.google.cloud.vision.v1.WebDetection.WebPage;
+import com.google.protobuf.ByteString;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Search1 implements ISearch {
 
@@ -31,6 +44,7 @@ public class Search1 implements ISearch {
     static private String projectId = ServiceOptions.getDefaultProjectId();
     static private String targetLanguage = "en";
     static private List<String> translations = new ArrayList<>();
+    static private List<Label> labels = new ArrayList<>();
 
 //    public static void detectLandmarks() throws IOException {
 //        // TODO(developer): Replace these variables before running the sample.
@@ -216,6 +230,114 @@ public class Search1 implements ISearch {
         }
     }
 
+    // Detects labels in the specified local image.
+    public static void detectLabels(String filePath) throws IOException {
+        labels.clear();
+        List<AnnotateImageRequest> requests = new ArrayList<>();
+
+        ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
+
+        Image img = Image.newBuilder().setContent(imgBytes).build();
+        Feature feat = Feature.newBuilder().setType(Feature.Type.LABEL_DETECTION).build();
+        AnnotateImageRequest request =
+                AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+        requests.add(request);
+
+        // Initialize client that will be used to send requests. This client only needs to be created
+        // once, and can be reused for multiple requests. After completing all of your requests, call
+        // the "close" method on the client to safely clean up any remaining background resources.
+        try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+            BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+            List<AnnotateImageResponse> responses = response.getResponsesList();
+
+            for (AnnotateImageResponse res : responses) {
+                if (res.hasError()) {
+                    System.out.format("Error: %s%n", res.getError().getMessage());
+                    return;
+                }
+
+                // For full list of available annotations, see http://g.co/cloud/vision/docs
+                for (EntityAnnotation annotation : res.getLabelAnnotationsList()) {
+                    Label tmp = new Label();
+                    String tmpDescribe = "google.cloud.vision.v1.EntityAnnotation.description";
+                    String tmpScore = "google.cloud.vision.v1.EntityAnnotation.score";
+                    for (Map.Entry<Descriptors.FieldDescriptor, Object> ele: annotation.getAllFields().entrySet()){
+                        Descriptors.FieldDescriptor key = ele.getKey();
+                        Object val = ele.getValue();
+                        if (key.toString().equals(tmpDescribe)){
+                            tmp.setDescription(val.toString());
+                        }
+                        if (key.toString().equals(tmpScore)){
+                            tmp.setScore(Float.parseFloat(val.toString()));
+                        }
+                    }
+                    labels.add(tmp);
+                    annotation
+                            .getAllFields()
+                            .forEach((k, v) -> System.out.format("%s : %s%n", k, v.toString()));
+                }
+            }
+        }
+    }
+
+    // Finds references to the specified image on the web.
+    public static void detectWebDetections(String filePath) throws IOException {
+        List<AnnotateImageRequest> requests = new ArrayList<>();
+
+        ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
+
+        Image img = Image.newBuilder().setContent(imgBytes).build();
+        Feature feat = Feature.newBuilder().setType(Type.WEB_DETECTION).build();
+        AnnotateImageRequest request =
+                AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+        requests.add(request);
+
+        // Initialize client that will be used to send requests. This client only needs to be created
+        // once, and can be reused for multiple requests. After completing all of your requests, call
+        // the "close" method on the client to safely clean up any remaining background resources.
+        try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+            BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+            List<AnnotateImageResponse> responses = response.getResponsesList();
+
+            for (AnnotateImageResponse res : responses) {
+                if (res.hasError()) {
+                    System.out.format("Error: %s%n", res.getError().getMessage());
+                    return;
+                }
+
+                // Search the web for usages of the image. You could use these signals later
+                // for user input moderation or linking external references.
+                // For a full list of available annotations, see http://g.co/cloud/vision/docs
+                WebDetection annotation = res.getWebDetection();
+                System.out.println("Entity:Id:Score");
+                System.out.println("===============");
+                for (WebEntity entity : annotation.getWebEntitiesList()) {
+                    System.out.println(
+                            entity.getDescription() + " : " + entity.getEntityId() + " : " + entity.getScore());
+                }
+                for (WebLabel label : annotation.getBestGuessLabelsList()) {
+                    System.out.format("%nBest guess label: %s", label.getLabel());
+                }
+                System.out.println("%nPages with matching images: Score%n==");
+                for (WebPage page : annotation.getPagesWithMatchingImagesList()) {
+                    System.out.println(page.getUrl() + " : " + page.getScore());
+                }
+                System.out.println("%nPages with partially matching images: Score%n==");
+                for (WebImage image : annotation.getPartialMatchingImagesList()) {
+                    System.out.println(image.getUrl() + " : " + image.getScore());
+                }
+                System.out.println("%nPages with fully matching images: Score%n==");
+                for (WebImage image : annotation.getFullMatchingImagesList()) {
+                    System.out.println(image.getUrl() + " : " + image.getScore());
+                }
+                System.out.println("%nPages with visually similar images: Score%n==");
+                for (WebImage image : annotation.getVisuallySimilarImagesList()) {
+                    System.out.println(image.getUrl() + " : " + image.getScore());
+                }
+            }
+        }
+    }
+
     @Override
     public boolean sendImage(String path) {
         try {
@@ -226,6 +348,7 @@ public class Search1 implements ISearch {
             for (Text t : pictureTexts){
                 Search1.translateText(projectId, targetLanguage, t.getDescription());
             }
+            Search1.detectLabels(path);
             return true;
         } catch (IOException e) {
             System.out.println("ERROR:" + e);
@@ -240,16 +363,24 @@ public class Search1 implements ISearch {
         pictureLandmarks = new ArrayList<>();
         return res;
     }
+    @Override
     public List<LocalizedObject> getLocalizedObjects() {
         return pictureDetails;
     }
 
+    @Override
     public List<Text> getTexts(){
         return pictureTexts;
     }
 
+    @Override
     public List<String> getTranslations(){
         return translations;
+    }
+
+    @Override
+    public List<Label> getLabels(){
+        return labels;
     }
 
 

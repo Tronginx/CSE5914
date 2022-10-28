@@ -1,10 +1,12 @@
 package com.cse5914backend.imageSearch;
 
+import com.cse5914backend.domain.Label;
 import com.cse5914backend.domain.LocalizedObject;
 import com.cse5914backend.domain.Text;
 import com.cse5914backend.domain.Thing;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * DON'T MODIFY THIS BEFORE SPEAK TO Daniel
@@ -23,5 +25,6 @@ public interface ISearch {
     List<LocalizedObject> getLocalizedObjects();
     List<Text> getTexts();
     List<String> getTranslations();
+    List<Label> getLabels();
 
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Component("GraphService")
@@ -54,6 +55,15 @@ public class GraphService implements IGraphService {
             return null;
         }
         return iSearch.getTranslations();
+    }
+
+    @Override
+    public List<Label> getLabels(String filePath) {
+        if(!readFile) {
+            System.out.println("Failed to read file.");
+            return null;
+        }
+        return iSearch.getLabels();
     }
 
 

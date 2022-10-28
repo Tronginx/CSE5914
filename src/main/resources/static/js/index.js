@@ -36,6 +36,16 @@ function uploadFile() {
     if (infoLeft3 != null){
         infoLeft3.remove();
     }
+    let infoLeft4 = document.getElementById('labelTable');
+    if (infoLeft4 != null){
+        infoLeft4.remove();
+    }
+
+    let infoLeft5 = document.getElementById('resourceTable');
+    if (infoLeft5 != null){
+        infoLeft5.remove();
+    }
+
 
     //formData里面存储的数据形式，一对key/value组成一条数据，key是唯一的，一个key可能对应多个value
     var myform = new FormData();
@@ -67,9 +77,11 @@ function uploadFile() {
                 details = result['data'][1];
                 texts = result['data'][2];
                 translations = result['data'][3];
+                labels = result['data'][4];
                 buildLandMarkTable(landmarks);
                 buildTextTable(texts, translations);
                 buildDetailTable(details);
+                buildLabelTable(labels);
                 newMap(landmarks);
                 let img = document.getElementById("display-img");
                 detailGraph(img, details);
@@ -130,6 +142,10 @@ function uploadFile() {
                     let infoTable = document.createElement('table');
                     let infoHead = document.createElement('thead');
                     let infoBody = document.createElement('tbody');
+                    let infoCaption = document.createElement('caption');
+                    infoCaption.innerHTML = 'Landmarks';
+                    infoCaption.style.fontWeight='bold';
+                    infoTable.appendChild(infoCaption);
                     infoTable.appendChild(infoHead);
                     infoTable.appendChild(infoBody);
                     infoTable.setAttribute('id', 'landmarkTable');
@@ -152,6 +168,10 @@ function uploadFile() {
                     let infoTable = document.createElement('table');
                     let infoHead = document.createElement('thead');
                     let infoBody = document.createElement('tbody');
+                    let infoCaption = document.createElement('caption');
+                    infoCaption.innerHTML = 'Texts';
+                    infoCaption.style.fontWeight='bold';
+                    infoTable.appendChild(infoCaption);
                     infoTable.appendChild(infoHead);
                     infoTable.appendChild(infoBody);
                     infoTable.setAttribute('id', 'textTable');
@@ -181,6 +201,10 @@ function uploadFile() {
                     let infoTable = document.createElement('table');
                     let infoHead = document.createElement('thead');
                     let infoBody = document.createElement('tbody');
+                    let infoCaption = document.createElement('caption');
+                    infoCaption.innerHTML = 'Details';
+                    infoCaption.style.fontWeight='bold';
+                    infoTable.appendChild(infoCaption);
                     infoTable.appendChild(infoHead);
                     infoTable.appendChild(infoBody);
                     infoTable.setAttribute('id', 'detailTable');
@@ -199,6 +223,31 @@ function uploadFile() {
                             j++;
                         }
                         row += '</td></tr>';
+                        infoBody.innerHTML += row
+                    }
+                }
+
+                function buildLabelTable(data) {
+                    let infoTable = document.createElement('table');
+                    let infoHead = document.createElement('thead');
+                    let infoBody = document.createElement('tbody');
+                    let infoCaption = document.createElement('caption');
+                    infoCaption.innerHTML = 'Labels';
+                    infoCaption.style.fontWeight='bold';
+                    infoTable.appendChild(infoCaption);
+                    infoTable.appendChild(infoHead);
+                    infoTable.appendChild(infoBody);
+                    infoTable.setAttribute('id', 'labelTable');
+                    document.getElementById('Placeholder4').appendChild(infoTable);
+                    infoTable.style.width = '100%';
+                    infoTable.style.border = '1px solid black';
+
+                    let headings = `<tr><th>Label</th><th>Score</th></tr>`
+                    infoHead.innerHTML += headings;
+
+                    for (let i = 0; i < data.length; i++){
+                        let row = `<tr><td>${data[i]['description']}</td>
+                                       <td>${data[i]['score']}</td></tr>`
                         infoBody.innerHTML += row
                     }
                 }

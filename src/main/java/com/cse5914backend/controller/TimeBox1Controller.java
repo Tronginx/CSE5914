@@ -1,10 +1,8 @@
 package com.cse5914backend.controller;
 
 import com.cse5914backend.controller.utils.R;
-import com.cse5914backend.domain.LocalizedObject;
+import com.cse5914backend.domain.*;
 import com.cse5914backend.domain.Record;
-import com.cse5914backend.domain.Text;
-import com.cse5914backend.domain.Thing;
 import com.cse5914backend.elasticSearch.IDataSearch;
 import com.cse5914backend.elasticSearch.impl.DataSearch1;
 import com.cse5914backend.service.IDataService;
@@ -20,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -71,11 +70,13 @@ public class TimeBox1Controller {
         List<LocalizedObject> detailResult = iGraphService.getDetails(newPath);
         List<Text> detailText = iGraphService.getTexts(newPath);
         List<String> translationText = iGraphService.getTranslations(newPath);
+        List<Label> labelText = iGraphService.getLabels(newPath);
         List<Object> result = new ArrayList<Object>();
         result.add(searchResult);
         result.add(detailResult);
         result.add(detailText);
         result.add(translationText);
+        result.add(labelText);
         // store history to IDataSearch
         //TODO: maybe need a try catch?
         if(searchResult==null || searchResult.size()==0){

@@ -1,5 +1,6 @@
 package com.cse5914backend.imageSearch.impl;
 
+import com.cse5914backend.domain.Label;
 import com.cse5914backend.domain.LocalizedObject;
 import com.cse5914backend.domain.Text;
 import com.cse5914backend.domain.Thing;
@@ -7,6 +8,7 @@ import com.cse5914backend.imageSearch.ISearch;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This is used to separately test front end from external service
@@ -52,6 +54,10 @@ public class Search2 implements ISearch {
 
     @Override
     public List<String> getTranslations() {
+        return null;
+    }
+    @Override
+    public List<Label> getLabels(){
         return null;
     }
 
