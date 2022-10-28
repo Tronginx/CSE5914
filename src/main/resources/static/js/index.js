@@ -40,10 +40,13 @@ function uploadFile() {
     if (infoLeft4 != null){
         infoLeft4.remove();
     }
-
-    let infoLeft5 = document.getElementById('resourceTable');
+    let infoLeft5 = document.getElementById('guessTable');
     if (infoLeft5 != null){
         infoLeft5.remove();
+    }
+    let infoLeft6 = document.getElementById('resourceTable');
+    if (infoLeft6 != null){
+        infoLeft6.remove();
     }
 
 
@@ -78,10 +81,12 @@ function uploadFile() {
                 texts = result['data'][2];
                 translations = result['data'][3];
                 labels = result['data'][4];
+                resources = result['data'][5];
                 buildLandMarkTable(landmarks);
                 buildTextTable(texts, translations);
                 buildDetailTable(details);
                 buildLabelTable(labels);
+                buildResourceTable(resources);
                 newMap(landmarks);
                 let img = document.getElementById("display-img");
                 detailGraph(img, details);
@@ -250,6 +255,53 @@ function uploadFile() {
                                        <td>${data[i]['score']}</td></tr>`
                         infoBody.innerHTML += row
                     }
+                }
+
+                function buildResourceTable(data) {
+                    let infoTable = document.createElement('table');
+                    let infoHead = document.createElement('thead');
+                    let infoBody = document.createElement('tbody');
+                    let infoCaption = document.createElement('caption');
+                    infoCaption.innerHTML = 'Best Guess';
+                    infoCaption.style.fontWeight='bold';
+                    infoTable.appendChild(infoCaption);
+                    infoTable.appendChild(infoHead);
+                    infoTable.appendChild(infoBody);
+                    infoTable.setAttribute('id', 'guessTable');
+                    document.getElementById('Placeholder5').appendChild(infoTable);
+                    infoTable.style.width = '100%';
+                    infoTable.style.border = '1px solid black';
+
+                    let headings = `<tr><th>Best Guess</th><th>Entity</th><th>Score</th></tr>`
+                    infoHead.innerHTML += headings;
+
+                    if (data.length != 0){
+                        let row = `<tr><td>${data[0]['bestGuessLabel']}</td>
+                                       <td>${data[0]['entityDescription']}</td>
+                                       <td>${data[0]['entityScore']}</td></tr>`
+                        infoBody.innerHTML += row
+                    }
+
+                    let infoTable2 = document.createElement('table');
+                    let infoBody2 = document.createElement('tbody');
+                    let infoCaption2 = document.createElement('caption');
+                    infoCaption2.innerHTML = 'Web Resources';
+                    infoCaption2.style.fontWeight='bold';
+                    infoTable2.appendChild(infoCaption2);
+                    infoTable2.appendChild(infoBody2);
+                    infoTable2.setAttribute('id', 'resourceTable');
+                    document.getElementById('Placeholder6').appendChild(infoTable2);
+                    infoTable2.style.width = '100%';
+                    infoTable2.style.border = '1px solid black';
+
+                    if (data.length != 0){
+                        let imgList = data[0]['images'];
+                        for (let i = 0; i < imgList.length; i++){
+                            let row = `<tr><td>${imgList[i]['description']}</td></tr>`
+                            infoBody2.innerHTML += row
+                        }
+                    }
+
                 }
             },
             error: function (data) {
