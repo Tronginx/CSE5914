@@ -35,4 +35,4 @@ Repo for CSE5914 team project
 ## Future testing:
 - Test the 'Detect text in graphs' and 'Translate texts into English' functions
 - Test the 'Detect label' function
-- Test the 'Buest Guess' function
+- Test the 'Best Guess' function
