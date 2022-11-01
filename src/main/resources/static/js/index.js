@@ -318,6 +318,8 @@ function uploadFile() {
                     document.getElementById('Placeholder6').appendChild(infoTable2);
                     infoTable2.style.width = '100%';
                     infoTable2.style.border = '1px solid black';
+                    // hide the picture link table
+                    infoTable2.style.display = 'none';
                     let row = document.createElement('tr');
                     let row2 = document.createElement('tr');
 
