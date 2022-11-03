@@ -10,7 +10,9 @@
     <title>Grabble - Guessing location</title>
 </head>
 <body class="container" id="body">
-<div class="card" id="UploadImage">
+
+<div class="row" id ="imgrow">
+<div class="card1" id="UploadImage">
     <div class="chip">
         <div class="textRow">Upload your picture</div>
     </div>
@@ -31,6 +33,26 @@
     </p>
 
 </div>
+
+
+<div class="card2" id="MapImage">
+    <div class="chip">
+        <div class="textRow">The Map of Location</div>
+        <p> <br></p>
+    </div>
+    <p>
+        <button id="map" onclick="initMap()" disabled>Get Map</button>
+        <script
+                src=
+                        "https://maps.googleapis.com/maps/api/js?key=AIzaSyCXj3VwBpYdqG7ILIPIfBDr6KFa1znNx1M&callback=initMap&libraries=places$sensor=false"
+                defer
+        ></script>
+    </p>
+
+</div>
+
+</div>
+
 <p>
 <div class="card" id="location">
     <div class="chip">
@@ -75,22 +97,7 @@
 </div>
 </p>
 
-<p>
-<div class="card" id="MapImage">
-    <div class="chip">
-        <div class="textRow">Location Map</div>
-    </div>
-    <p>
-        <button id="map" onclick="initMap()" disabled>Get Map</button>
-        <script
-                src=
-                        "https://maps.googleapis.com/maps/api/js?key=AIzaSyCXj3VwBpYdqG7ILIPIfBDr6KFa1znNx1M&callback=initMap&libraries=places$sensor=false"
-                defer
-        ></script>
-    </p>
 
-</div>
-</p>
 
 <p>
     <!--create search history table-->
