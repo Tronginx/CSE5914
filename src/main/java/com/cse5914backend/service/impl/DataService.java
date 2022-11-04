@@ -21,7 +21,7 @@ public class DataService implements IDataService {
             System.out.println(thing.getLatitude()+"--------"+thing.getLongitude()+"--------");
             record.setFilePath(filePath);
             record.setLatitude(String.valueOf(thing.getLatitude()));
-            record.setLongitude(String.valueOf(thing.getLongitude())); //Fix later
+            record.setLongitude(String.valueOf(thing.getLongitude()));
             iDataSearch.sendHistory(record);
         }
         return true;
