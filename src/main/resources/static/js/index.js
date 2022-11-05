@@ -42,6 +42,9 @@ function uploadFile() {
     if (file == null) {
         alert("Please choose file you want to recognize");
         return false;
+    } else if (file.size > 2097152 * 30){
+        alert("File size has to be under 50 MB!");
+        this.value = "";
     } else {
         $.ajax({
             url: "/upload",

@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -48,6 +49,9 @@ public class TimeBox1Controller {
     public R aUpload(@RequestParam("file") MultipartFile file) {
         // 获取上传文件名
         String filename = file.getOriginalFilename();
+        if(filename == null || !validName(filename) ) {
+            return new R(false, null);
+        }
         String suffixName = filename.substring(filename.lastIndexOf("."));
         // 定义上传文件保存路径
         String path = filePath + "images/";
@@ -85,6 +89,23 @@ public class TimeBox1Controller {
         return new R(true, result);
     }
 
+    //determine if file path is valid
+    private boolean validName(String fileName) {
+        //find position of last '.'
+        int index = 0;
+        for (int i = fileName.length() - 1; i >= 0; i--) {
+            if (fileName.charAt(i) == '.') {
+                index = i;
+            }
+        }
+        String suffix = fileName.substring(index + 1, fileName.length() - 1);
+
+        if (!suffix.equals("png") || !suffix.equals("jpeg") || !suffix.equals("webp")) {
+            return false;
+        }
+
+        return true;
+    }
     // return search history
     @GetMapping("/getHistory")
     public R getHistory(){
