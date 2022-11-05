@@ -27,7 +27,7 @@ public class TimeBox1Controller {
     /**
      * 上传地址
      */
-    @Value("/Users/tron/RealTron/Pics")
+    @Value("/Users/yz/Documents/22fall/CSE5914")
     private String filePath;
 
     @Qualifier("GraphService")

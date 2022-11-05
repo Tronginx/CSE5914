@@ -131,12 +131,14 @@ function uploadFile() {
                     infoTable.style.width = '100%';
                     infoTable.style.border = '1px solid black';
 
-                    let headings = `<tr><th>Check</th><th>Name</th><th>Latitude</th><th>Longitude</th></tr>`
+                    let headings = `<tr><th>Name</th><th>Latitude</th><th>Longitude</th></tr>`
                     infoHead.innerHTML += headings;
-
+                    if (data.length === 0) {
+                        let row = `<tr>No Search Result Return</tr>`
+                        infoBody.innerHTML += row
+                    }
                     for (let i = 0; i < data.length; i++){
-                        let row = `<tr><td><input type='checkbox'></td>
-                                       <td>${data[i]['name']}</td>
+                        let row = `<tr><td>${data[i]['name']}</td>
                                        <td>${data[i]['latitude']}</td>
                                        <td>${data[i]['longitude']}</td></tr>`
                         infoBody.innerHTML += row
