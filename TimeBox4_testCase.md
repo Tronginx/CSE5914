@@ -9,5 +9,5 @@
 | input | map button issue(jump back to columbus) | x | Yang |
 | ui | checkbox removal | x | Cai |
 | input | map can't move | x | Yang |
-| input+ouput| same image search: history| | Dan+Barry|
+| input+ouput| same image search: history| x | Dan+Barry|
 | database | longitude and latitude separation | x | Barry |
