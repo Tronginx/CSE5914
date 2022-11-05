@@ -21,8 +21,22 @@ function readURL(input) {
     }
 }
 
+async function uploadClick() {
+    disableButton().then(() =>
+    uploadFile().then(() => {
+        document.getElementById('submitbutton').disabled = false;
+        document.getElementById('submitbutton').style.opacity='1';
+    }));
+}
+
+async function disableButton() {
+    document.getElementById('submitbutton').disabled = true;
+    document.getElementById('submitbutton').style.opacity='0.5';
+}
+
 //上传文件
-function uploadFile() {
+async function uploadFile() {
+
     // detect any table left before uploading new one
     let infoLeft1 = document.getElementById('landmarkTable');
     if (infoLeft1 != null){
@@ -32,7 +46,6 @@ function uploadFile() {
     if (infoLeft2 != null){
         infoLeft2.remove();
     }
-
     //formData里面存储的数据形式，一对key/value组成一条数据，key是唯一的，一个key可能对应多个value
     var myform = new FormData();
     // 此时可以调用append()方法来添加数据
@@ -47,7 +60,7 @@ function uploadFile() {
             url: "/upload",
             type: "POST",
             data: myform,
-            async: false,
+            // async: false,
             contentType: false,
             processData: false,
             success: function (result) {// result 是传回来的json
