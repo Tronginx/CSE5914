@@ -2,8 +2,8 @@
 
 |Type | CASE        | Solved? | Responsible |
 |------|-----------|------|---------------|
-| output | handle no search result returned | | Daniel|
-| input | upload button multiple clicks | | Yan |
+| output | handle no search result returned | x | Daniel|
+| input | upload button multiple clicks | x | Yan |
 | input | upload file type restriction | x | Tron |
 | input | upload file size | x | Tron |
 | input | map button issue(jump back to columbus) | x | Yang |
