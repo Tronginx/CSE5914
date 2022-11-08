@@ -49,9 +49,6 @@ public class TimeBox1Controller {
     public R aUpload(@RequestParam("file") MultipartFile file) {
         // 获取上传文件名
         String filename = file.getOriginalFilename();
-        if(filename == null || !validName(filename) ) {
-            return new R(false, null);
-        }
         String suffixName = filename.substring(filename.lastIndexOf("."));
         // 定义上传文件保存路径
         String path = filePath + "images/";
