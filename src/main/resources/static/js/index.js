@@ -22,7 +22,12 @@ function readURL(input) {
 }
 
 //上传文件
+var submitting = false;
 function uploadFile() {
+    if(submitting){
+        return;
+    }
+    submitting = true;
     // detect any table left before uploading new one
     let infoLeft1 = document.getElementById('landmarkTable');
     if (infoLeft1 != null){
@@ -67,7 +72,7 @@ function uploadFile() {
             url: "/upload",
             type: "POST",
             data: myform,
-            async: false,
+            async: true,
             contentType: false,
             processData: false,
             success: function (result) {// result 是传回来的json
@@ -93,9 +98,12 @@ function uploadFile() {
                 newMap(landmarks, resources);
                 let img = document.getElementById("display-img");
                 detailGraph(img, details);
+                submitting = false;
             },
             error: function (data) {
                 alert("Please upload image only under 50MB(.png/.jpeg/.webp).");
+                // alert("系统错误");
+                submitting = false;
             }
         });
     }
