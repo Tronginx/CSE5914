@@ -11,3 +11,4 @@
 | input | map can't move | x | Yang |
 | input+ouput| same image search: history| x | Dan+Barry|
 | database | longitude and latitude separation | x | Barry |
+| backend | wrong file type to backend (fake jpg file) | |  |
