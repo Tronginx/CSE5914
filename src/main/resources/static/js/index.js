@@ -10,14 +10,18 @@ function initMap() {
 
 
 function readURL(input) {
-    console.log("reached here");
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        var img = document.getElementById("display-img");
-        reader.readAsDataURL(input.files[0]);
-        reader.onload = () => {
-            img.src=reader.result;
-        };
+    try {
+        console.log("reached here");
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            var img = document.getElementById("display-img");
+            reader.readAsDataURL(input.files[0]);
+            reader.onload = () => {
+                img.src = reader.result;
+            };
+        }
+    } catch (error) {
+        console.error(error);
     }
 }
 
@@ -67,6 +71,7 @@ function uploadFile() {
     } else if (file.size > 2097152 * 30){
         alert("File size has to be under 50 MB!");
         this.value = "";
+        window.location.reload();
     } else {
         $.ajax({
             url: "/upload",
@@ -80,6 +85,9 @@ function uploadFile() {
                 document.getElementById('Placeholder1').innerHTML="";
                 //data[i].name是地名，data[i].locations是array， locations(0) is longitude, (1)is latitude
                 console.log(result['data']);
+                // if(result['data'] == null) {
+                //     alert("Input is invalid.");
+                // }
                 alert("Successfully uploaded!");
                 $("#div_show_img").html("<img id='input_img' src='" + result + "'>");
                 $("#imgPath").attr("value", result);
@@ -104,6 +112,7 @@ function uploadFile() {
                 alert("Please upload image only under 50MB(.png/.jpeg/.webp).");
                 // alert("系统错误");
                 submitting = false;
+                //window.location.reload();
             }
         });
     }
