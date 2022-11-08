@@ -92,7 +92,10 @@ function buildLandMarkTable(data) {
 
     let headings = `<tr><th>Name</th><th>Latitude</th><th>Longitude</th></tr>`
     infoHead.innerHTML += headings;
-
+    if (data.length === 0) {
+        let row = `<tr>No Search Result Return</tr>`
+        infoBody.innerHTML += row
+    }
     for (let i = 0; i < data.length; i++){
         let row = `<tr><td>${data[i]['name']}</td>
                        <td>${data[i]['latitude']}</td>
