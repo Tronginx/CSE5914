@@ -59,6 +59,9 @@ function uploadFile() {
     if (file == null) {
         alert("Please choose file you want to recognize");
         return false;
+    } else if (file.size > 2097152 * 30){
+        alert("File size has to be under 50 MB!");
+        this.value = "";
     } else {
         $.ajax({
             url: "/upload",
@@ -92,7 +95,7 @@ function uploadFile() {
                 detailGraph(img, details);
             },
             error: function (data) {
-                alert("系统错误");
+                alert("Please upload image only under 50MB(.png/.jpeg/.webp).");
             }
         });
     }

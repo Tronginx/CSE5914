@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class TimeBox1Controller {
     /**
      * 上传地址
      */
-    @Value("${file.upload.path}")
+    @Value("/Users/tron/RealTron/Pics")
     private String filePath;
 
     @Qualifier("GraphService")
@@ -93,6 +94,23 @@ public class TimeBox1Controller {
         return new R(true, result);
     }
 
+    //determine if file path is valid
+    private boolean validName(String fileName) {
+        //find position of last '.'
+        int index = 0;
+        for (int i = fileName.length() - 1; i >= 0; i--) {
+            if (fileName.charAt(i) == '.') {
+                index = i;
+            }
+        }
+        String suffix = fileName.substring(index + 1, fileName.length() - 1);
+
+        if (!suffix.equals("png") || !suffix.equals("jpeg") || !suffix.equals("webp")) {
+            return false;
+        }
+
+        return true;
+    }
     // return search history
     @GetMapping("/getHistory")
     public R getHistory(){
