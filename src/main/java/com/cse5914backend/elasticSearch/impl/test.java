@@ -22,17 +22,17 @@ public class test {
 //
 //        es.sendHistory(r1);
 
-        //List<Record> m =es.getSearchHistory();
+        List<Record> m =es.getSearchHistory();
         //QueryBuilder m = es.matchQuery();
 
 
-        List<Record> m =es.searchByName("location","gardens*");
-//        for (Record t:m
-//             ) {
-//            es.deleteRecordById(t.getId());
-//        }
-//        List<Record> me =es.getSearchHistory();
-//     System.out.println(m);
+        //List<Record> m =es.searchByName("location","gardens*");
+        for (Record t:m
+             ) {
+            es.deleteRecordById(t.getId());
+        }
+        List<Record> me =es.getSearchHistory();
+     System.out.println(m);
 //        List<Record> m =es.getSearchHistory();
 //        for(int a=0;a<m.size();a++){
 //            es.deleteRecordById(m.get(a).getId());
