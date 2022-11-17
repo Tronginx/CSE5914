@@ -1,36 +1,21 @@
 # CSE5914
 
-##### Meeting 1
+### Final Presentation 
 
-Date: 09/05/2022 8:30 pm
+#### Part1 Collect user's posts.
 
-- assigned mockup sprint
+#### Part2 Analyze user's posts and generate keywords
 
-##### Meeting 2
 
-Date: 09/06/2022 4:00 pm
+#### Part3 Compose the keywords to a sentecne.
+- https://github.com/gagan3012/keytotext
 
-Agenda:
+#### Part4 AI drawing based on the sentecne
 
-- apply css styles on the html
-- implement the upload button(javascript)
-- add two queries
+- discord bot: https://replicate.com/blog/build-a-robot-artist-for-your-discord-server-with-stable-diffusion
+- code
 
-##### Meeting 3
-
-Date: 09/25/2022 8:00 pm
-
-Frontend: Yang Li, Yan Zhang
-
-- wait for implementation of backend part
-
-Elasticsearch: Yuanshen Wang, Chaobo Cai
-
-- find turoial of elasticsearch
-- deploy elasticsearch locally
-- plan to use elasticsearch to **store search history**
-
-Backend: Daniel Huang, Tron Tian 
-
-- implemented ISearch interface
+stable diffusion
+- https://beta.dreamstudio.ai/dream
+- https://huggingface.co/spaces/stabilityai/stable-diffusion
 
