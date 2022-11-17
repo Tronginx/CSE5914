@@ -9,6 +9,7 @@
 
 #### Part3 Compose the keywords to a sentecne.
 - https://github.com/gagan3012/keytotext
+- pip install opencv-python
 
 #### Part4 AI drawing based on the sentecne
 
