@@ -86,6 +86,10 @@ def run_discord_bot():
 
         print(f"{username} said: '{user_message}' in '{channel}'")
 
+        if len(user_message) == 0:
+            print("No input")
+            return
+
         if user_message[0] == '!':
             await client.process_commands(message)
             return
