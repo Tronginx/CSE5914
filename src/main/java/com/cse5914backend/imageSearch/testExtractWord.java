@@ -23,7 +23,8 @@ public class testExtractWord {
         imagePaths.add(imagePath5);
         for (String path : imagePaths) {
             if (path.length() > 0){
-                String result = iExtractWord.extractInfo(path);
+//                String result = iExtractWord.extractInfo(path);
+                String result = "null";
                 outputs.add(result);
             } else {
                 outputs.add("Nothing found");

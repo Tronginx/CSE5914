@@ -1,11 +1,10 @@
 package com.cse5914backend.imageSearch;
 import java.io.IOException;
+import java.util.List;
 
 public interface IExtractWord {
-    /**
-     * Extract information (place, words, or sentence)
-     * @param filePath
-     * @return the best guess info
-     */
-    String extractInfo(String filePath) throws IOException;
+
+    //send image, return true if able to open
+    boolean sendImage(String path);
+    String getBestGuess();
 }
