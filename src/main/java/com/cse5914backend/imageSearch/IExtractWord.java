@@ -1,4 +1,5 @@
 package com.cse5914backend.imageSearch;
+import java.io.IOException;
 
 public interface IExtractWord {
     /**
@@ -6,5 +7,5 @@ public interface IExtractWord {
      * @param filePath
      * @return the best guess info
      */
-    String extractInfo(String filePath);
+    String extractInfo(String filePath) throws IOException;
 }
