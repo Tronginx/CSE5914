@@ -13,14 +13,15 @@ function buildBestGuessTable(data) {
     infoTable.style.width = '100%';
     infoTable.style.border = '1px solid black';
 
-    let headings = `<tr><th>Keyword</th></tr>`
+    let headings = `<tr><th>Picture #</th><th>Keyword</th></tr>`
     infoHead.innerHTML += headings;
     if (data.length === 0) {
         let row = `<tr>No Search Result Return</tr>`
         infoBody.innerHTML += row
     }
     for (let i = 0; i < data.length; i++){
-        let row = `<tr><td>${data[i]}</td></tr>`
+        let row = `<tr><td>${i+1}</td>
+                        <td>${data[i]}</td></tr>`
         infoBody.innerHTML += row
     }
 }
