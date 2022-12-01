@@ -1,14 +1,3 @@
-function initMap() {
-    const myLatlng = { lat: 39.9833, lng: -82.9833 };
-
-    const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 10,
-        center: myLatlng,
-    });
-}
-
-
-
 function readURL(input) {
     console.log("reached here");
     if (input.files && input.files[0]) {
@@ -16,6 +5,11 @@ function readURL(input) {
         for (let i = 0; i < input.files.length; i++){
             let reader = new FileReader();
             reader.readAsDataURL(input.files[i]);
+            let current = "display-img" + (i+1).toString();
+            var img = document.getElementById(current);
+            reader.onload = () => {
+                img.src = reader.result;
+            };
         }
 //         var img = document.getElementById("display-img");
 //         reader.readAsDataURL(input.files[0]);
@@ -33,32 +27,10 @@ function uploadFile() {
     }
     submitting = true;
     // detect any table left before uploading new one
-    let infoLeft1 = document.getElementById('landmarkTable');
+    let infoLeft1 = document.getElementById('bestGuessTable');
     if (infoLeft1 != null){
         infoLeft1.remove();
     }
-    let infoLeft2 = document.getElementById('detailTable');
-    if (infoLeft2 != null){
-        infoLeft2.remove();
-    }
-    let infoLeft3 = document.getElementById('textTable');
-    if (infoLeft3 != null){
-        infoLeft3.remove();
-    }
-    let infoLeft4 = document.getElementById('labelTable');
-    if (infoLeft4 != null){
-        infoLeft4.remove();
-    }
-    let infoLeft5 = document.getElementById('guessTable');
-    if (infoLeft5 != null){
-        infoLeft5.remove();
-    }
-    let infoLeft6 = document.getElementById('resourceTable');
-    if (infoLeft6 != null){
-        infoLeft6.remove();
-    }
-
-
     //formData里面存储的数据形式，一对key/value组成一条数据，key是唯一的，一个key可能对应多个value
     var myform = new FormData();
     // 此时可以调用append()方法来添加数据
@@ -82,8 +54,11 @@ function uploadFile() {
             contentType: false,
             processData: false,
             success: function (result) {// result 是传回来的json
-                console.log(result['data'])
                 //TODO: NOTE :result.data是一个 Thing list， 用array接收
+                console.log(result['data'])
+                submitting = false;
+                bestGuesses = result['data']
+                buildBestGuessTable(bestGuesses);
                 // document.getElementById('Placeholder1').innerHTML="";
                 // //data[i].name是地名，data[i].locations是array， locations(0) is longitude, (1)is latitude
                 // console.log(result['data']);

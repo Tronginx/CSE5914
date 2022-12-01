@@ -1,3 +1,31 @@
+function buildBestGuessTable(data) {
+    let infoTable = document.createElement('table');
+    let infoHead = document.createElement('thead');
+    let infoBody = document.createElement('tbody');
+    let infoCaption = document.createElement('caption');
+    infoCaption.innerHTML = 'Best Guesses';
+    infoCaption.style.fontWeight='bold';
+    infoTable.appendChild(infoCaption);
+    infoTable.appendChild(infoHead);
+    infoTable.appendChild(infoBody);
+    infoTable.setAttribute('id', 'bestGuessTable');
+    document.getElementById('Placeholder1').appendChild(infoTable);
+    infoTable.style.width = '100%';
+    infoTable.style.border = '1px solid black';
+
+    let headings = `<tr><th>Picture #</th><th>Keyword</th></tr>`
+    infoHead.innerHTML += headings;
+    if (data.length === 0) {
+        let row = `<tr>No Search Result Return</tr>`
+        infoBody.innerHTML += row
+    }
+    for (let i = 0; i < data.length; i++){
+        let row = `<tr><td>${i+1}</td>
+                       <td>${data[i]}</td></tr>`
+        infoBody.innerHTML += row
+    }
+}
+
 function newMap(landmarks, resources) {
     let latitude = 39.9833;
     let longitude = -82.9833;

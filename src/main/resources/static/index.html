@@ -29,124 +29,69 @@
     <!--Dan: modified for image display  -->
     <p>
 
-        <img id="display-img" src="img/image-placeholder.jpg" width="600px" height="400px">
+        <img id="display-img1" src="img/image-placeholder.jpg" width="600px" height="400px">
 
     </p>
 
 </div>
 
 
-<div class="card2" id="MapImage">
+<div class="card2" id="Image2">
     <div class="chip">
-        <div class="textRow">The Map of Location</div>
-        <p> <br></p>
+        <div class="textRow">Picture 2</div>
     </div>
+    <br></br>
     <p>
-        <button id="map" onclick="initMap()" disabled>Get Map</button>
-        <script
-                src=
-                        "https://maps.googleapis.com/maps/api/js?key=AIzaSyCXj3VwBpYdqG7ILIPIfBDr6KFa1znNx1M&callback=initMap&libraries=places$sensor=false"
-                defer
-        ></script>
+        <img id="display-img2" src="img/image-placeholder.jpg" width="600px" height="400px">
     </p>
-
 </div>
 
 </div>
+<div class="row" id ="imgrow2">
+    <div class="card1" id="Image3">
+        <div class="chip">
+            <div class="textRow">Picture 3</div>
+        </div>
+        <br></br>
+        <p>
+            <img id="display-img3" src="img/image-placeholder.jpg" width="600px" height="400px">
+        </p>
 
-<p>
-<div class="card" id="location">
-    <div class="chip">
-        <div class="textRow">Information</div>
     </div>
-    <br></br>
-    <p>
-    <p>
-    <div class="img-container" id="Placeholder5">
-        <!-- <img src="assets/images/Oval.png"> -->
+
+
+    <div class="card2" id="Image4">
+        <div class="chip">
+            <div class="textRow">Picture 4</div>
+        </div>
+        <br></br>
+        <p>
+            <img id="display-img4" src="img/image-placeholder.jpg" width="600px" height="400px">
+        </p>
     </div>
-    </p>
-    <div class="img-container" id="Placeholder1">
-        <!-- <img src="assets/images/Oval.png"> -->
-    </div>
-    </p>
-    <p>
-    <div class="img-container" id="Placeholder3">
-        <!-- <img src="assets/images/Oval.png"> -->
-    </div>
-    </p>
-    <p>
-    <div class="img-container" id="Placeholder4">
-        <!-- <img src="assets/images/Oval.png"> -->
-    </div>
-    </p>
-    <p>
-    <div class="img-container" id="Placeholder6">
-        <!-- <img src="assets/images/Oval.png"> -->
-    </div>
-    </p>
-    <p>
-    <div class="img-container" id="Placeholder2">
-        <!-- <img src="assets/images/Oval.png"> -->
-    </div>
-    </p>
-    <p>
-    <div class="img-container">
-        <canvas id="detailPicture"></canvas>
-    </div>
-    </p>
+
 </div>
-</p>
+<div class="row" id ="imgrow3">
+    <div class="card1" id="Image5">
+        <div class="chip">
+            <div class="textRow">Picture 5</div>
+        </div>
+        <br></br>
+        <p>
+            <img id="display-img5" src="img/image-placeholder.jpg" width="600px" height="400px">
+        </p>
 
+    </div>
 
-
-<p>
-    <!--create search history table-->
-<div class="card" id="searchHistory">
-    <div class="chip">
-        <div class="textRow">Search History</div>
+    <div class="card2" id="ResultTable">
+        <div class="chip">
+            <div class="textRow">Best Guesses</div>
+        </div>
+        <br><br>
+        <div class="img-container" id="Placeholder1">
+            <!-- <img src="assets/images/Oval.png"> -->
+        </div>
     </div>
-    <br></br>
-    <div>
-        <label for="locationName">Location Name:</label><br>
-        <input type="text" id="locationName" name="locationName" value=""><br>
-    </div>
-    <br></br>
-    <div>
-        <button id="search" onclick="searchHistory()">Check Search History</button>
-    </div>
-    <br></br>
-    <table id="searchTable">
-        <thead>
-        <tr>
-            <th>History Data</th>
-        </tr>
-        </thead>
-        <tbody id="searchTbody">
-        </tbody>
-    </table>
-</div>
-</p>
-
-<!--create history table-->
-<div class="card" id="history">
-    <div class="chip">
-        <div class="textRow">History Review</div>
-    </div>
-    <br></br>
-    <div>
-        <button id="checkHistory" onclick="getHistory()">Check</button>
-    </div>
-    <br></br>
-    <table id="historyTable">
-        <thead>
-        <tr>
-            <th>Location</th>
-        </tr>
-        </thead>
-        <tbody id="historybody">
-        </tbody>
-    </table>
 </div>
 
 </body>
