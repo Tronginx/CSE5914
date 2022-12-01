@@ -12,15 +12,16 @@ function initMap() {
 function readURL(input) {
     console.log("reached here");
     if (input.files && input.files[0]) {
+//        var reader = new FileReader();
         for (let i = 0; i < input.files.length; i++){
             let reader = new FileReader();
             reader.readAsDataURL(input.files[i]);
         }
-        // var img = document.getElementById("display-img");
-        // reader.readAsDataURL(input.files[0]);
-        // reader.onload = () => {
-        //     img.src=reader.result;
-        // };
+//         var img = document.getElementById("display-img");
+//         reader.readAsDataURL(input.files[0]);
+//         reader.onload = () => {
+//             img.src=reader.result;
+//         };
     }
 }
 
@@ -61,9 +62,10 @@ function uploadFile() {
     //formData里面存储的数据形式，一对key/value组成一条数据，key是唯一的，一个key可能对应多个value
     var myform = new FormData();
     // 此时可以调用append()方法来添加数据
-    // myform.append('file', $("#img")[0].files[0]);
+//     myform.append('file', $("#img")[0].files[0]);
     for (let i = 0; i < $("#img")[0].files.length; i++){
         myform.append('file', $("#img")[0].files[i]);
+        console.log("myform.appending...");
     }
     //验证不为空
     var file = $("#img")[0].files[0];

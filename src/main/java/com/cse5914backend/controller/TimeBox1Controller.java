@@ -48,11 +48,11 @@ public class TimeBox1Controller {
 
     // 执行上传
     @RequestMapping("/upload")
-    public R aUpload(@RequestParam("files") MultipartFile[] files) {
+    public R aUpload(@RequestParam("file") MultipartFile[] file) {
         List<Object> result = new ArrayList<Object>();
-        Arrays.asList(files).stream().forEach(file -> {
+        Arrays.asList(file).stream().forEach(f -> {
             // 获取上传文件名
-            String filename = file.getOriginalFilename();
+            String filename = f.getOriginalFilename();
             String suffixName = filename.substring(filename.lastIndexOf("."));
             // 定义上传文件保存路径
             String path = filePath + "images/";
@@ -67,7 +67,7 @@ public class TimeBox1Controller {
             String newPath = path + File.separator + newImgName;
             try {
                 // 写入文件
-                file.transferTo(new File(newPath));
+                f.transferTo(new File(newPath));
             } catch (IOException e) {
                 e.printStackTrace();
             }
