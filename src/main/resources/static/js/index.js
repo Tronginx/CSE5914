@@ -9,7 +9,7 @@ function readURL(input) {
                 img.src = reader.result;
             }
         })
-        for (let i = 0; i < input.files.length; i++){
+        for (let i = 0; i < Math.min(input.files.length, 5); i++){
             let current = "display-img" + (i+1).toString();
             readFileAsync(input.files[i], current);
         }
