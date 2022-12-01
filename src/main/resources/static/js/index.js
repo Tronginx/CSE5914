@@ -1,21 +1,19 @@
 function readURL(input) {
     console.log("reached here");
     if (input.files && input.files[0]) {
-//        var reader = new FileReader();
-        for (let i = 0; i < input.files.length; i++){
-            let reader = new FileReader();
-            reader.readAsDataURL(input.files[i]);
-            let current = "display-img" + (i+1).toString();
+        let readFileAsync = (file, current) => new Promise((resolve) => {
             var img = document.getElementById(current);
+            const reader = new FileReader()
+            reader.readAsDataURL(file)
             reader.onload = () => {
                 img.src = reader.result;
-            };
+            }
+        })
+        for (let i = 0; i < input.files.length; i++){
+            let current = "display-img" + (i+1).toString();
+            readFileAsync(input.files[i], current);
         }
-//         var img = document.getElementById("display-img");
-//         reader.readAsDataURL(input.files[0]);
-//         reader.onload = () => {
-//             img.src=reader.result;
-//         };
+        console.log("finished reading");
     }
 }
 
