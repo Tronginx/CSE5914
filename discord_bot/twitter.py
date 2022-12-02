@@ -1,5 +1,7 @@
+import requests
 import snscrape.modules.twitter as sntwitter
 import pandas as pd
+import requests
 
 query = "(from:MasterDaye) until:2022-12-02" \
         "since:2022-11-01"
@@ -10,8 +12,14 @@ for tweet in sntwitter.TwitterSearchScraper(query).get_items():
     if len(tweets) == limits:
         break
     else:
-        tweets.append([tweet.date, tweet.user.username, tweet.media])
+        if not tweet.media:
+            continue
+        for medium in tweet.media:
+            if isinstance(medium, sntwitter.Photo):
+                r = requests.get(medium.fullUrl)
+                print(r)
+                tweets.append([tweet.date, tweet.user.username, tweet.media])
 
 df = pd.DataFrame(tweets, columns=['Date', 'User', 'Tweet'])
 print(df)
-df.to_csv(f'here.csv', index=False, encoding='utf-8')
+# df.to_csv(f'here.csv', index=False, encoding='utf-8')
