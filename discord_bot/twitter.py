@@ -3,7 +3,10 @@ import snscrape.modules.twitter as sntwitter
 import pandas as pd
 import requests
 
-query = "(from:MasterDaye) until:2022-12-02" \
+username = input('Enter the twitter account you want to search: ')
+# username = 'MasterDaye'
+
+query = f"(from:{username}) until:2022-12-02" \
         "since:2022-11-01"
 tweets = []
 limits = 10
