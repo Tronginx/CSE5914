@@ -7,6 +7,8 @@ query = "(from:MasterDaye) until:2022-12-02" \
         "since:2022-11-01"
 tweets = []
 limits = 10
+path = 'images/file'
+i = 1
 
 for tweet in sntwitter.TwitterSearchScraper(query).get_items():
     if len(tweets) == limits:
@@ -17,9 +19,11 @@ for tweet in sntwitter.TwitterSearchScraper(query).get_items():
         for medium in tweet.media:
             if isinstance(medium, sntwitter.Photo):
                 r = requests.get(medium.fullUrl)
-                with open('filename.jpg', 'wb') as fp:
-                    fp.write(r.content)
+                if r.status_code == 200:
+                    with open(path + str(i) + '.jpg', 'wb') as fp:
+                        fp.write(r.content)
                 tweets.append([tweet.date, tweet.user.username, medium.fullUrl])
+                i += 1
                 r.close()
 
 df = pd.DataFrame(tweets, columns=['Date', 'User', 'Tweet'])
