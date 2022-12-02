@@ -17,8 +17,10 @@ for tweet in sntwitter.TwitterSearchScraper(query).get_items():
         for medium in tweet.media:
             if isinstance(medium, sntwitter.Photo):
                 r = requests.get(medium.fullUrl)
-                print(r)
+                with open('filename.jpg', 'wb') as fp:
+                    fp.write(r.content)
                 tweets.append([tweet.date, tweet.user.username, medium.fullUrl])
+                r.close()
 
 df = pd.DataFrame(tweets, columns=['Date', 'User', 'Tweet'])
 print(df)
