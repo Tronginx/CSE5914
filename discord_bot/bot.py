@@ -5,6 +5,7 @@ from discord import Intents
 from discord.ext import commands
 from dotenv import load_dotenv
 from keytotext import pipeline
+import twitter
 
 import responses
 
@@ -58,6 +59,15 @@ def run_discord_bot():
         model = replicate.models.get("stability-ai/stable-diffusion")
         image = model.predict(prompt=prompt)[0]
         await msg.edit(content=f"“{prompt}”\n{image}")
+
+    @client.command()
+    async def scrape(ctx, username, path):
+        images = twitter.get_twitter(username, path)
+        await ctx.send(f'{username}\'s recent 10 images are collected')
+        await ctx.send(f'You may find the images at: {path}')
+        for image in images:
+            await ctx.send(f'{image}')
+
 
     @client.command()
     async def have(ctx, *args):
