@@ -1,6 +1,9 @@
 # CSE5914
 
 ### Final Presentation 
+- pip install -r requirements.txt
+- pip install google-cloud-vision
+- pip install protobuf==3.20.3
 
 #### Part1 Collect user's posts.
 
