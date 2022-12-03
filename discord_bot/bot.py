@@ -6,6 +6,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 from keytotext import pipeline
 import twitter
+import bestGuess
 
 import responses
 
@@ -84,6 +85,16 @@ def run_discord_bot():
             input_args.append(arg)
         await ctx.send(f'{len(args)} arguments: {arguments}')
         await ctx.send(f'The generated sentence is: {nlp(input_args)}')
+
+    @client.command()
+    async def keyword(ctx, *args):
+        """Generate keywords based on the given images"""
+        paths = []
+        for arg in args:
+            paths.append(arg)
+        keywords = bestGuess.detect_web(paths)
+        for word in keywords:
+            await ctx.send(f'Best guess label: {word}')
 
 
     @client.event
