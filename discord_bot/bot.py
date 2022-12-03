@@ -36,21 +36,25 @@ def run_discord_bot():
 
     @client.command()
     async def hello(ctx):
+        """Formal greeting!"""
         await ctx.send("Hello, I'm the Grabble bot!")
 
     @client.command()
     async def bye(ctx):
+        """Formal goodbye!"""
         await ctx.send("See ya!")
 
     @client.command()
     async def help_me(ctx):
+        """Instruction on how to use the main function"""
         await ctx.send('Type in different words, and then I\'ll create a sentence to draw a picture for you. '
                        '\nUse the command "Dream something"')
 
     @client.command()
     async def instruction(ctx):
+        """Instruction set"""
         await ctx.send('instructions: [hello, bye, dream something, have something (format: !have a, b, "c d")'
-                       ', help_me, instruction]')
+                       ', help_me, instruction, scrape]')
 
     @client.command()
     async def dream(ctx, *, prompt):
@@ -62,6 +66,7 @@ def run_discord_bot():
 
     @client.command()
     async def scrape(ctx, username, path):
+        """Scrape the twitter account images"""
         images = twitter.get_twitter(username, path)
         await ctx.send(f'{username}\'s recent 10 images are collected')
         await ctx.send(f'You may find the images at: {path}')
@@ -71,6 +76,7 @@ def run_discord_bot():
 
     @client.command()
     async def have(ctx, *args):
+        """Generate a sentence based on the given arguments"""
         arguments = ', '.join(args)
         nlp = pipeline("k2t")
         input_args = []
