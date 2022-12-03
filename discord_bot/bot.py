@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from keytotext import pipeline
 import twitter
 import bestGuess
+import all
 
 import responses
 
@@ -74,7 +75,6 @@ def run_discord_bot():
         for image in images:
             await ctx.send(f'{image}')
 
-
     @client.command()
     async def have(ctx, *args):
         """Generate a sentence based on the given arguments"""
@@ -96,6 +96,18 @@ def run_discord_bot():
         for word in keywords:
             await ctx.send(f'Best guess label: {word}')
 
+    @client.command()
+    async def all_in(ctx, username, path):
+        """All function here, format: !all_in twitterUserName path"""
+        keywords = all.all_in(username, path)
+        nlp = pipeline("k2t")
+        prompt = nlp(keywords)
+        await ctx.send(f'{len(keywords)} arguments: {keywords}')
+        await ctx.send(f'The generated sentence is: {prompt}')
+        msg = await ctx.send(f"“{prompt}”\n> Generating...")
+        model = replicate.models.get("stability-ai/stable-diffusion")
+        image = model.predict(prompt=prompt)[0]
+        await msg.edit(content=f"“{prompt}”\n{image}")
 
     @client.event
     async def on_member_join(member):
