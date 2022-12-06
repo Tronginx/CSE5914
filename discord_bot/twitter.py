@@ -29,11 +29,13 @@ def get_twitter(username, inputPath) -> list:
                         with open(path + str(i) + '.jpg', 'wb') as fp:
                             fp.write(r.content)
                     tweets.append([tweet.date, tweet.user.username, medium.fullUrl])
+                    if len(tweets) == limits:
+                        break
                     images.append([medium.fullUrl])
                     i += 1
                     r.close()
 
-    df = pd.DataFrame(tweets, columns=['Date', 'User', 'Tweet'])
-    print(df)
+    # df = pd.DataFrame(tweets, columns=['Date', 'User', 'Tweet'])
+    # print(df)
     # df.to_csv(f'here.csv', index=False, encoding='utf-8')
     return images
